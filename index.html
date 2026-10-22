@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SilverFrame · production vidéo à Lyon</title>
+<meta name="description" content="SilverFrame, Yann V. : réalisation, tournage, montage et étalonnage à Lyon, pour les marques et les agences.">
+<link rel="icon" href="media/icone.png">
+<link rel="canonical" href="https://www.silverframeagency.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SilverFrame Agency">
+<meta property="og:title" content="SilverFrame · production vidéo à Lyon">
+<meta property="og:description" content="Réalisation, tournage, montage et étalonnage à Lyon, pour les marques et les agences.">
+<meta property="og:url" content="https://www.silverframeagency.com/">
+<meta property="og:image" content="https://www.silverframeagency.com/media/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="apple-touch-icon" href="media/icone.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"LocalBusiness","name":"SilverFrame Agency","description":"Production vidéo à Lyon : réalisation, tournage, montage et étalonnage pour les marques et les agences.","url":"https://www.silverframeagency.com/","image":"https://www.silverframeagency.com/media/og.jpg","logo":"https://www.silverframeagency.com/media/logo-silverframe.png","email":"silverframeagency@gmail.com","telephone":"+33677521036","address":{"@type":"PostalAddress","streetAddress":"99 rue de la Part-Dieu","postalCode":"69003","addressLocality":"Lyon","addressCountry":"FR"},"founder":{"@type":"Person","name":"Yann Volle"},"sameAs":["https://www.instagram.com/silverframe.agency/","https://www.linkedin.com/company/silverframe-agency/","https://vimeo.com/user90211483"]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Aboreto&family=IBM+Plex+Mono:wght@400;500&family=Poppins:wght@200;300;400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Site SilverFrame Agency (v3 de la maquette du 13/10/2026, en ligne le 22/10/2026) : noir, argent, lilas ; Aboreto (marque), Syne (index), Poppins (texte), Plex Mono (timecode). */
+:root{
+  --noir:#050505; --n2:#0c0c0e; --ligne:rgba(243,241,238,.12); --ligne2:rgba(243,241,238,.24);
+  --blanc:#f3f1ee; --argent:#c9cbd1; --doux:#8f8d96; --lilas:#c0b8cc; --violet:#7d6f97; --rec:#e0422f;
+  --marque:'Aboreto',Georgia,serif; --index:'Syne',sans-serif; --texte:'Poppins',-apple-system,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --g:clamp(16px,4vw,64px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--noir);color:var(--blanc);-webkit-text-size-adjust:100%}
+body{font-family:var(--texte);font-weight:300;font-size:16px;line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img,video{display:block;max-width:100%}
+::selection{background:var(--lilas);color:var(--noir)}
+.lab{font-family:var(--marque);font-size:11px;letter-spacing:.34em;color:var(--doux);text-transform:uppercase}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--doux)}
+@media (hover:hover){body,a,button{cursor:none}}
+
+/* curseur */
+#curseur{position:fixed;left:0;top:0;width:14px;height:14px;border-radius:50%;background:var(--blanc);z-index:90;pointer-events:none;transform:translate(-50%,-50%);mix-blend-mode:difference;transition:width .3s,height .3s,background .3s;display:grid;place-items:center;font:500 10px var(--mono);letter-spacing:.12em;color:transparent}
+#curseur.film{width:86px;height:86px;background:var(--lilas);mix-blend-mode:normal;color:var(--noir)}
+@media (hover:none){#curseur{display:none}}
+
+/* en-tête */
+header{position:fixed;inset:0 0 auto;z-index:30;mix-blend-mode:difference;color:#fff}
+header .in{display:flex;align-items:center;gap:28px;height:72px;padding:0 var(--g)}
+.wm{display:flex;align-items:center;gap:12px}
+.wm img{height:30px;width:auto;filter:brightness(2.2)}
+.wm span{font-family:var(--marque);font-size:13px;letter-spacing:.36em}
+header nav{display:flex;gap:30px;margin-left:auto}
+header nav a{font-family:var(--marque);font-size:11px;letter-spacing:.3em}
+header nav a:hover{opacity:.6}
+.heure{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;min-width:118px;text-align:right}
+@media(max-width:820px){header nav a.o{display:none}.heure{display:none}header nav{gap:18px}}
+
+/* ouverture : le film dans les lettres, puis plongée */
+.ouv{position:relative;height:260svh;background:#000}
+.ouv .scene{position:sticky;top:0;height:100svh;overflow:hidden}
+.ouv video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ouv canvas{position:absolute;inset:0;width:100%;height:100%;background:#000;z-index:1}
+.cache-titre{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.ouv .indice{position:absolute;left:0;right:0;bottom:28px;text-align:center;z-index:3;transition:opacity .4s}
+.ouv .voile{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,0) 30%,rgba(0,0,0,0) 55%,rgba(0,0,0,.8));opacity:0;z-index:2}
+.rec{position:absolute;top:96px;left:var(--g);z-index:3;display:flex;gap:16px;align-items:center;opacity:0}
+.rec .pt{width:9px;height:9px;border-radius:50%;background:var(--rec);animation:clign 1.2s steps(2,start) infinite}
+@keyframes clign{to{visibility:hidden}}
+.rec .mono{color:#fff}
+.ouv .bas{position:absolute;left:var(--g);right:var(--g);bottom:clamp(28px,7vh,72px);z-index:3;display:flex;justify-content:space-between;align-items:end;gap:30px;flex-wrap:wrap;opacity:0;transform:translateY(20px)}
+.ouv .bas h2{font-family:var(--index);font-weight:800;font-size:clamp(34px,6vw,92px);line-height:.92;letter-spacing:-.035em;max-width:13ch}
+.ouv .bas p{max-width:320px;color:var(--argent);font-size:14.5px}
+.jouer{margin-top:18px;display:inline-flex;align-items:center;gap:12px;font-family:var(--marque);font-size:11px;letter-spacing:.3em;color:#fff;background:none;border:0;padding:0}
+.jouer i{width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.55);display:grid;place-items:center;font-style:normal;transition:.3s}
+.jouer:hover i{background:#fff;color:#000}
+
+/* manifeste */
+.manif{padding:clamp(110px,14vw,190px) var(--g) clamp(80px,10vw,130px);display:grid;grid-template-columns:220px 1fr;gap:40px}
+.manif p.grand{font-weight:200;font-size:clamp(28px,3.6vw,54px);line-height:1.18;letter-spacing:-.012em;max-width:26ch}
+.manif p.grand em{font-style:normal;color:var(--lilas)}
+.manif .postes{display:flex;gap:44px;margin-top:52px;flex-wrap:wrap}
+.manif .postes div{font-family:var(--index);font-weight:700;font-size:15px}
+.manif .postes span{display:block;font-family:var(--mono);font-weight:400;font-size:11px;color:var(--doux);margin-top:6px}
+@media(max-width:820px){.manif{grid-template-columns:1fr;gap:18px}}
+
+/* bande horizontale */
+.bande{position:relative}
+.bande .scene{position:sticky;top:0;height:100svh;overflow:hidden;display:flex;align-items:center}
+.bande .rail{display:flex;gap:3vw;padding:0 var(--g);will-change:transform}
+.plan{position:relative;flex:none;width:62vw;height:68svh;overflow:hidden;background:#000}
+.plan.v{width:30vw}
+.plan img{width:100%;height:100%;object-fit:cover;transform:scale(1.12);will-change:transform}
+.plan .t{position:absolute;left:22px;right:22px;bottom:18px;z-index:1}
+.plan .t b{display:block;font-family:var(--index);font-weight:800;font-size:clamp(28px,4.4vw,72px);line-height:.92;letter-spacing:-.035em;text-shadow:0 2px 30px rgba(0,0,0,.5)}
+.plan .t span{display:block;margin-top:8px;font-family:var(--mono);font-size:12px;color:#e7e3ec;text-shadow:0 1px 8px #000}
+.plan .n{position:absolute;top:16px;left:20px;font-family:var(--mono);font-size:12px;color:#fff;z-index:1}
+.plan::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.7));pointer-events:none}
+.bande .titre{position:absolute;top:96px;left:var(--g);z-index:2}
+.bande .prog{position:absolute;left:var(--g);right:var(--g);bottom:22px;height:1px;background:var(--ligne)}
+.bande .prog i{display:block;height:100%;width:0;background:var(--blanc)}
+@media(max-width:820px){.plan{width:84vw;height:58svh}.plan.v{width:56vw}}
+
+/* index */
+.index{padding:clamp(80px,10vw,140px) var(--g) 120px}
+.index .tete{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;padding-bottom:26px;border-bottom:1px solid var(--ligne2)}
+.index h2{font-family:var(--marque);font-weight:400;font-size:clamp(28px,3.4vw,46px);letter-spacing:.08em}
+.filtres{display:flex;gap:6px;flex-wrap:wrap}
+.filtres button{background:none;border:1px solid var(--ligne);color:var(--argent);font-family:var(--marque);font-size:10.5px;letter-spacing:.24em;padding:9px 14px;border-radius:99px}
+.filtres button.on,.filtres button:hover{border-color:var(--blanc);color:var(--blanc)}
+.ligne{display:grid;grid-template-columns:58px minmax(0,1.25fr) minmax(0,1.3fr) 170px 70px;gap:20px;align-items:baseline;padding:22px 0 20px;border-bottom:1px solid var(--ligne);position:relative;transition:color .25s,padding .35s cubic-bezier(.2,.7,.2,1)}
+.ligne .n{font-family:var(--mono);font-size:12px;color:var(--doux)}
+.ligne .cl{font-family:var(--index);font-weight:700;font-size:clamp(22px,2.6vw,40px);line-height:1.05;letter-spacing:-.02em}
+.ligne .ti{color:var(--argent);font-size:15px}
+.ligne .di{font-family:var(--marque);font-size:10.5px;letter-spacing:.24em;color:var(--doux)}
+.ligne .an{font-family:var(--mono);font-size:12px;color:var(--doux);text-align:right}
+.index.survol .ligne{color:rgba(243,241,238,.24)}
+.index.survol .ligne .ti{color:rgba(201,203,209,.24)}
+.index.survol .ligne.actif{color:var(--blanc);padding-left:16px}
+.index.survol .ligne.actif .ti{color:var(--argent)}
+.ligne.cachee{display:none}
+.ligne .vign{display:none}
+#flottant{position:fixed;left:0;top:0;width:380px;aspect-ratio:16/9;z-index:25;pointer-events:none;opacity:0;transform:translate(-50%,-50%) scale(.9) rotate(-2deg);transition:opacity .25s,transform .45s cubic-bezier(.2,.7,.2,1);overflow:hidden;background:#000}
+#flottant.v{width:230px;aspect-ratio:9/16}
+#flottant.on{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}
+#flottant video{width:100%;height:100%;object-fit:cover}
+#flottant .tc{position:absolute;left:10px;bottom:8px;font-family:var(--mono);font-size:10.5px;color:#fff;text-shadow:0 1px 4px #000}
+@media(max-width:820px){
+  .ligne{grid-template-columns:34px 1fr;gap:4px 12px;padding:18px 0}
+  .ligne .ti,.ligne .di{grid-column:2}.ligne .an{display:none}
+  .ligne .vign{display:block;grid-column:1 / -1;margin-top:12px;aspect-ratio:16/9;object-fit:cover;width:100%}
+  #flottant{display:none}
+}
+
+/* planche contact */
+.planche{padding:0 var(--g) 130px}
+.planche .tete{display:flex;justify-content:space-between;align-items:end;margin-bottom:22px;gap:20px;flex-wrap:wrap}
+.planche h2{font-family:var(--marque);font-weight:400;font-size:clamp(24px,2.8vw,38px);letter-spacing:.08em}
+.grille{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;background:var(--n2);padding:6px;grid-auto-flow:dense}
+.grille figure{position:relative;aspect-ratio:3/2;overflow:hidden;background:#000}
+.grille img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05);opacity:.78;transition:filter .5s,opacity .5s,transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.grille figure:hover img{filter:none;opacity:1;transform:scale(1.04)}
+.grille figcaption{position:absolute;left:8px;bottom:6px;font-family:var(--mono);font-size:10px;color:#fff;text-shadow:0 1px 4px #000}
+.grille .g{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
+@media(max-width:820px){.grille{grid-template-columns:repeat(3,1fr)}.grille .g{grid-column:span 3;grid-row:auto;aspect-ratio:3/2}}
+
+/* agences */
+.agences{padding:130px var(--g);background:var(--blanc);color:var(--noir);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:80px}
+.agences .lab{color:#6b6872}
+.agences h2{font-family:var(--marque);font-weight:400;font-size:clamp(32px,4.2vw,62px);line-height:1.04;letter-spacing:.03em;margin-top:20px}
+.agences p.intro{margin-top:28px;font-size:17px;color:#3c3a40;max-width:46ch}
+.points{border-top:1px solid #0505052a;list-style:none}
+.points li{display:grid;grid-template-columns:60px 1fr;gap:16px;padding:24px 0;border-bottom:1px solid #0505052a}
+.points li span{font-family:var(--mono);font-size:12px;color:var(--violet);padding-top:4px}
+.points h3{font-family:var(--index);font-weight:700;font-size:21px;letter-spacing:-.015em}
+.points p{color:#4a4850;font-size:15px;margin-top:6px}
+.livrables{margin-top:46px;display:flex;flex-wrap:wrap;gap:8px}
+.livrables span{border:1px solid #05050533;border-radius:99px;padding:7px 13px;font-size:13px}
+@media(max-width:900px){.agences{grid-template-columns:1fr;gap:40px}}
+
+/* clients */
+.clients{padding:110px 0 0}
+.clients .lab{padding:0 var(--g)}
+.defile{overflow:hidden;border-top:1px solid var(--ligne);border-bottom:1px solid var(--ligne);margin-top:30px;padding:26px 0}
+.defile .piste{display:flex;gap:70px;width:max-content;animation:defile 38s linear infinite;align-items:center}
+.defile b{font-family:var(--index);font-weight:800;font-size:clamp(34px,5vw,74px);letter-spacing:-.035em;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(243,241,238,.55)}
+.defile b:nth-child(3n+1){color:var(--blanc);-webkit-text-stroke:0}
+@keyframes defile{to{transform:translateX(-50%)}}
+.murs{display:grid;grid-template-columns:repeat(6,1fr);border-left:1px solid var(--ligne);margin:40px var(--g) 0}
+.murs div{aspect-ratio:3/2;border-right:1px solid var(--ligne);border-bottom:1px solid var(--ligne);border-top:1px solid var(--ligne);display:grid;place-items:center;padding:22%}
+.murs img{max-height:60px;width:auto;filter:grayscale(1) brightness(1.6);opacity:.7;transition:opacity .3s}
+.murs div:hover img{opacity:1}
+@media(max-width:820px){.murs{grid-template-columns:repeat(3,1fr)}}
+@media (prefers-reduced-motion:reduce){.defile .piste{animation:none}}
+
+/* témoignages */
+.paroles{padding:110px var(--g) 130px;display:grid;grid-template-columns:220px 1fr;gap:40px}
+.citation{font-weight:200;font-size:clamp(22px,2.6vw,36px);line-height:1.3;min-height:4.2em;transition:opacity .5s}
+.auteur{margin-top:22px;font-family:var(--marque);font-size:11px;letter-spacing:.28em;color:var(--argent)}
+.puces{display:flex;gap:8px;margin-top:34px}
+.puces button{width:28px;height:2px;border:0;background:var(--ligne2)}
+.puces button.on{background:var(--blanc)}
+@media(max-width:820px){.paroles{grid-template-columns:1fr}}
+
+/* studio */
+.studio{padding:0 var(--g) 130px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:34px}
+.duo img{width:100%;aspect-ratio:4/5;object-fit:cover;filter:grayscale(.2)}
+.duo figcaption{margin-top:16px}
+.duo b{font-family:var(--marque);font-weight:400;font-size:20px;letter-spacing:.14em}
+.duo p{color:var(--doux);font-size:14.5px;max-width:42ch;margin-top:8px}
+@media(max-width:820px){.duo{grid-template-columns:1fr}}
+
+/* contact */
+.contact{padding:130px var(--g) 70px;border-top:1px solid var(--ligne);position:relative;overflow:hidden}
+.contact .halo{position:absolute;inset:auto -10% -60% -10%;height:120%;background:radial-gradient(50% 50% at 50% 50%,rgba(125,111,151,.35),rgba(5,5,5,0) 70%);pointer-events:none}
+.mail{position:relative;display:inline-block;font-family:var(--index);font-weight:800;font-size:clamp(40px,8vw,140px);letter-spacing:-.045em;line-height:.95;margin:30px 0 40px}
+.mail:after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:3px;background:var(--lilas);transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.mail:hover:after{transform:scaleX(1)}
+.coord{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:30px;border-top:1px solid var(--ligne);padding-top:30px}
+.coord div{font-size:14.5px;color:var(--argent)}
+.coord .lab{display:block;margin-bottom:10px}
+@media(max-width:820px){.coord{grid-template-columns:1fr 1fr}}
+footer{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:28px var(--g) 40px}
+
+/* lecteur */
+.lecteur{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.96);display:none;place-items:center;padding:70px 16px 24px}
+.lecteur.on{display:grid}
+.lecteur .cadre{width:min(1280px,100%);aspect-ratio:16/9;position:relative;background:#000}
+.lecteur .cadre.v{width:auto;height:calc(100svh - 110px);aspect-ratio:9/16}
+.lecteur iframe,.lecteur video{position:absolute;inset:0;width:100%;height:100%;border:0}
+.lecteur .x{position:absolute;top:18px;right:18px;background:none;border:1px solid var(--ligne2);color:#fff;width:46px;height:46px;border-radius:50%;font-size:20px}
+.lecteur .t{position:absolute;top:30px;left:22px;right:90px}
+.badge{position:fixed;left:14px;bottom:14px;z-index:40;font-family:var(--mono);font-size:10.5px;color:var(--noir);background:var(--lilas);padding:6px 10px;border-radius:2px}
+</style>
+</head>
+<body>
+<div id="curseur">LIRE</div>
+
+<header><div class="in">
+  <a class="wm" href="#"><img src="media/logo-silverframe-blanc.png" alt=""><span>SILVERFRAME</span></a>
+  <nav><a class="o" href="#films">Films</a><a class="o" href="#agences">Agences</a><a class="o" href="#studio">Studio</a><a href="#contact">Contact</a></nav>
+  <div class="heure" id="heure">LYON 00:00:00</div>
+</div></header>
+
+<section class="ouv" id="ouv">
+  <div class="scene">
+    <video id="ouvv" autoplay muted loop playsinline preload="auto" poster="media/boucle.jpg"><source src="media/boucle.mp4" type="video/mp4"></video>
+    <div class="voile" id="voile"></div>
+    <canvas id="plonge" aria-hidden="true"></canvas><h1 class="cache-titre">SilverFrame, production vidéo à Lyon</h1>
+    <div class="rec" id="rec"><i class="pt"></i><span class="mono" id="tc">00:00:00:00</span><span class="mono">LYON</span></div>
+    <div class="indice lab" id="indice">Descendre</div>
+    <div class="bas" id="bas">
+      <h2>On filme ce que les marques savent faire.</h2>
+      <div><p>Films de marque, corporate, événements et clips. Réalisation, tournage, montage et étalonnage, depuis Lyon.</p>
+        <button class="jouer" type="button" onclick="film()"><i>▶</i>LE FILM · 1 MIN</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="manif">
+  <div class="lab">Depuis 2016</div>
+  <div>
+    <p class="grand">Un match de l'équipe de France vu par l'artiste Lorem. Un sertissage filmé à quelques millimètres. <em>Une convention de tatouage, un bar éphémère au ski, un clip de metal.</em></p>
+    <div class="postes"><div>Réalisation<span>Yann V.</span></div><div>Tournage<span>image, son, lumière</span></div><div>Montage<span>16:9, 9:16, 1:1</span></div><div>Étalonnage<span>sur chaque film</span></div><div>Photo<span>Auriane</span></div></div>
+  </div>
+</section>
+
+<section class="bande" id="bande">
+  <div class="scene">
+    <div class="titre lab">Sélection 2022 – 2026</div>
+    <div class="rail" id="rail"></div>
+    <div class="prog"><i id="prog"></i></div>
+  </div>
+</section>
+
+<section class="index" id="films">
+  <div class="tete"><h2>TOUS LES FILMS</h2><div class="filtres" id="filtres"></div></div>
+  <div id="liste"></div>
+</section>
+<div id="flottant"><video muted loop playsinline preload="none"></video><span class="tc" id="ftc"></span></div>
+
+<section class="planche">
+  <div class="tete"><h2>PLANCHE CONTACT</h2><span class="mono">Images extraites des films · survoler pour la couleur</span></div>
+  <div class="grille" id="grille"></div>
+</section>
+
+<section class="agences" id="agences">
+  <div>
+    <div class="lab">Pour les agences</div>
+    <h2>Votre équipe image, le temps d'un projet.</h2>
+    <p class="intro">Vous gardez le client et l'idée. On prend la production : repérage, tournage, montage, étalonnage, et les déclinaisons pour les réseaux.</p>
+    <div class="livrables"><span>Master 4K</span><span>16:9 · 9:16 · 1:1</span><span>Formats réseaux</span><span>Sous-titres</span><span>Photo de plateau</span><span>Aftermovie</span></div>
+  </div>
+  <ol class="points">
+    <li><span>01</span><div><h3>Le même regard du début à la fin</h3><p>Yann réalise, tourne, monte et étalonne. Rien ne se perd entre le plateau et la post-production.</p></div></li>
+    <li><span>02</span><div><h3>Seul ou en équipe</h3><p>Seul avec son matériel pour un format court, avec une équipe image, son et lumière pour un film de marque.</p></div></li>
+    <li><span>03</span><div><h3>Sous votre nom si besoin</h3><p>On peut intervenir pour l'agence, face à son client, sans le démarcher ensuite.</p></div></li>
+    <li><span>04</span><div><h3>Lyon, et ailleurs</h3><p>Basé à Lyon, on tourne partout en France et à l'étranger.</p></div></li>
+  </ol>
+</section>
+
+<section class="clients">
+  <div class="lab">Ils nous ont confié un film</div>
+  <div class="defile"><div class="piste" id="piste"></div></div>
+  <div class="murs" id="murs"></div>
+</section>
+
+<section class="paroles">
+  <div class="lab">Ce qu'ils en disent</div>
+  <div><p class="citation" id="cit"></p><div class="auteur" id="aut"></div><div class="puces" id="puces"></div></div>
+</section>
+
+<section class="studio" id="studio">
+  <div class="lab">Le studio</div>
+  <div class="duo">
+    <figure><img src="media/yann.jpg" alt="Yann V." loading="lazy"><figcaption><b>YANN V.</b><p>Réalisateur depuis 2016. Il tient le film du repérage à l'étalonnage, et il est aussi batteur dans un groupe.</p></figcaption></figure>
+    <figure><img src="media/auriane.jpg" alt="Auriane" loading="lazy"><figcaption><b>AURIANE</b><p>Photographe, formée à l'école Émile Cohl. Elle fait les images fixes des tournages, dans le même étalonnage que le film.</p></figcaption></figure>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="halo"></div>
+  <div class="lab" style="position:relative">Un brief, une date, une idée</div>
+  <a class="mail" href="mailto:silverframeagency@gmail.com">Écrire à Yann ↗</a>
+  <div class="coord">
+    <div><span class="lab">Mail</span>silverframeagency@gmail.com</div>
+    <div><span class="lab">Téléphone</span>06 77 52 10 36</div>
+    <div><span class="lab">Studio</span>99 rue de la Part-Dieu<br>69003 Lyon</div>
+    <div><span class="lab">Ailleurs</span><a href="https://www.instagram.com/silverframe.agency/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.linkedin.com/company/silverframe-agency/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://vimeo.com/user90211483" target="_blank" rel="noopener">Vimeo</a></div>
+  </div>
+</section>
+<footer class="mono"><span>© 2026 SilverFrame Agency · EURL</span><span><a href="post/credit-agricole-lorem-equipe-de-france-football/">Coulisses : Crédit Agricole × FFF</a> · <a href="mentions-legales/">Mentions légales · Confidentialité</a></span></footer>
+
+<div class="lecteur" id="lecteur"><span class="lab t" id="lt"></span><button class="x" onclick="fermer()" aria-label="Fermer">×</button><div class="cadre" id="cadre"></div></div>
+
+<script>
+const M = 'media/', V = '?v=2';
+const ov = document.getElementById('ouvv');
+// [id, vimeo, client, titre, filtre, libellé, année, vertical]
+const F = [
+  ['ca-fff','1217039625','Crédit Agricole × FFF','Un match de l\'équipe de France, avec l\'artiste Lorem','social','Réseaux sociaux','2026',1],
+  ['don-papa','1168529161','Don Papa Rum','Winterlandia, un bar éphémère en station','event','Événementiel','2026',1],
+  ['ozur','1188034228','Ozur','Les maillots, portés par une nageuse olympique','social','Mode','2026',1],
+  ['ink-factory','1188031932','The Ink Factory','Aftermovie de la convention de tatouage','event','Aftermovie','2026',0],
+  ['vjm','1176655479','VJM','Le sertissage, filmé en macro','corporate','Joaillerie','2026',0],
+  ['sunborn','1156001897','Sunborn','« Glacier »','clip','Clip','2026',0],
+  ['keyena','1059359077','Keyena × Artik','Des pointes peintes à la main, un stade de nuit','marque','Film de marque','2025',0],
+  ['ca-candice','1059358866','Crédit Agricole','Candice Chlovy, agricultrice','corporate','Portrait','2025',0],
+  ['ca-campagne','1059359955','Crédit Agricole','Campagne régionale','corporate','Corporate','2025',0],
+  ['telethon','1039204100','LOREM × VANGART','Une œuvre pour le Téléthon','social','Réseaux sociaux','2024',1],
+  ['ultimate','1039051701','Adrien Gonzales ft. EIGA','« Ultimate »','clip','Clip','2024',0],
+  ['vangart-macro','794421371','VANGART','Le fil, de très près','marque','Publicité','2023',0],
+  ['monfairepart','890836795','Monfairepart','Dans l\'atelier de fabrication','corporate','Corporate','2023',0],
+  ['vangart-fab','691045247','VANGART','La fabrication des toiles brodées','marque','Film de marque','2022',0],
+  ['bears','751282874','Bear\'s Towers','« Hometown »','clip','Clip','2022',0],
+];
+const FILTRES = [['tout','Tout'],['marque','Marques'],['corporate','Corporate'],['event','Événementiel'],['social','Réseaux sociaux'],['clip','Clips']];
+const LOGOS = ['credit-agricole','fff','deutsche-welle','wella','don-papa','chapoutier','aluna','ink-factory','kosmos','mjh','monfairepart','vangart'];
+const NOMS = ['Crédit Agricole','Équipe de France','Deutsche Welle','Wella','Don Papa Rum','M. Chapoutier','Aluna Festival','The Ink Factory','Kosmos','MJH Life Sciences','Monfairepart','VANGART'];
+const PAROLES = [
+  ['Nous travaillons avec SilverFrame depuis plus d\'un an : une structure incroyable et un professionnalisme rarissime. On recommande à 150 %.','M&R DIGITAL AGENCY'],
+  ['On bosse avec SilverFrame depuis presque 5 ans, et ils ont signé la totalité des vidéos de VANGART. Clairement, ils ont beaucoup joué dans la construction de notre image.','BENJAMIN BEAU · VANGART'],
+  ['Très réactif, professionnel et humain. Travail de très grande qualité.','ROMAIN UGHETTO · COMING SOON AGENCY'],
+  ['La vidéo est exceptionnelle et répond parfaitement à nos attentes.','MARYLINE JULLIEN · MARGARON'],
+];
+const BANDE = ['ca-fff','keyena','ink-factory','don-papa','vangart-macro','sunborn','ozur','ca-candice'];
+const idxF = k => F.findIndex(f => f[0] === k);
+const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+const fin = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* bande horizontale */
+document.getElementById('rail').innerHTML = BANDE.map((k, i) => { const f = F[idxF(k)];
+  return `<div class="plan${f[7] ? ' v' : ''}" data-film onclick="lire(${idxF(k)})"><img src="${M}films/${k}.jpg${V}" alt="${f[2]}"><span class="n">${String(i + 1).padStart(2, '0')} / ${String(BANDE.length).padStart(2, '0')}</span><div class="t"><b>${f[2]}</b><span>${f[3]} · ${f[6]}</span></div></div>`; }).join('');
+
+/* index */
+const liste = document.getElementById('liste'), idx = document.querySelector('.index');
+liste.innerHTML = F.map((f, i) => `<div class="ligne" data-film data-k="${f[0]}" data-c="${f[4]}" data-v="${f[7]}" onclick="lire(${i})">
+  <span class="n">${String(i + 1).padStart(2, '0')}</span><span class="cl">${f[2]}</span><span class="ti">${f[3]}</span><span class="di">${f[5].toUpperCase()}</span><span class="an">${f[6]}</span>
+  <img class="vign" src="${M}films/${f[0]}.jpg${V}" alt="" loading="lazy"></div>`).join('');
+document.getElementById('filtres').innerHTML = FILTRES.map((x, i) => `<button class="${i ? '' : 'on'}" onclick="filtrer('${x[0]}',this)">${x[1]}</button>`).join('');
+function filtrer(c, b) {
+  document.querySelectorAll('.filtres button').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('.ligne').forEach(l => l.classList.toggle('cachee', c !== 'tout' && l.dataset.c !== c));
+}
+const fl = document.getElementById('flottant'), fv = fl.querySelector('video'), ftc = document.getElementById('ftc');
+document.querySelectorAll('.ligne').forEach(l => {
+  l.addEventListener('mouseenter', () => { idx.classList.add('survol'); l.classList.add('actif'); fl.classList.toggle('v', l.dataset.v === '1');
+    fv.src = M + 'apercus/' + l.dataset.k + '.mp4'; fv.play().catch(() => {}); fl.classList.add('on'); });
+  l.addEventListener('mouseleave', () => { l.classList.remove('actif'); idx.classList.remove('survol'); fl.classList.remove('on'); fv.pause(); });
+});
+
+/* planche contact (une image par film, légende = client) */
+const G = [['vangart-macro','g'],['keyena',''],['ca-fff',''],['ink-factory',''],['don-papa',''],['sunborn',''],['ca-candice',''],['ozur','g'],['vjm',''],['ultimate',''],['bears',''],['monfairepart',''],['vangart-fab',''],['ca-campagne',''],['telethon',''],['kosmos','']];
+document.getElementById('grille').innerHTML = G.map(([g, c]) => { const i = idxF(g); const nom = i >= 0 ? F[i][2] : 'Kosmos';
+  return `<figure class="${c}"${i >= 0 ? ` data-film onclick="lire(${i})"` : ''}><img src="${M}films/${g}.jpg${V}" alt="${nom}" loading="lazy"><figcaption>${nom}</figcaption></figure>`; }).join('');
+
+/* clients */
+document.getElementById('piste').innerHTML = [...NOMS, ...NOMS].map(n => `<b>${n}</b>`).join('');
+document.getElementById('murs').innerHTML = LOGOS.map((l, i) => `<div><img src="${M}logos/${l}.png" alt="${NOMS[i]}" loading="lazy"></div>`).join('');
+
+/* témoignages */
+let pi = 0; const cit = document.getElementById('cit'), aut = document.getElementById('aut'), puces = document.getElementById('puces');
+puces.innerHTML = PAROLES.map((_, i) => `<button onclick="parole(${i})" aria-label="Témoignage ${i + 1}"></button>`).join('');
+function parole(i) { pi = i; cit.style.opacity = 0; setTimeout(() => { cit.textContent = '« ' + PAROLES[i][0] + ' »'; aut.textContent = PAROLES[i][1]; cit.style.opacity = 1; }, 250);
+  puces.querySelectorAll('button').forEach((b, k) => b.classList.toggle('on', k === i)); }
+parole(0); setInterval(() => parole((pi + 1) % PAROLES.length), 7000);
+
+/* défilement : plongée dans la lettre, bande horizontale */
+const ouv = document.getElementById('ouv'), cv = document.getElementById('plonge'), cx2 = cv.getContext('2d');
+const bas = document.getElementById('bas'), rec = document.getElementById('rec'), voile = document.getElementById('voile'), indice = document.getElementById('indice');
+const bande = document.getElementById('bande'), rail = document.getElementById('rail'), prog = document.getElementById('prog');
+let zoom = 1, police = false, pivot = {};
+function cherchePivot(W, H, fs, x0, y0, avant, la) {   // point au cœur du trait le plus épais du « A »
+  const o = document.createElement('canvas'); o.width = W; o.height = H; const k = o.getContext('2d');
+  k.font = `${fs}px Aboreto, Georgia, serif`; k.fillStyle = '#fff'; k.fillText('A', x0 + avant, y0);
+  const gx = Math.max(0, Math.floor(x0 + avant)), gw = Math.ceil(la), top = Math.floor(y0 - fs * .72), bas = Math.floor(y0);
+  const d = k.getImageData(gx, top, gw, bas - top).data; let best = {n: 0, x: x0 + avant + la / 2, y: y0 - fs * .3};
+  for (let r = Math.floor((bas - top) * .45); r < (bas - top) * .9; r += 2) {
+    let run = 0, debut = 0;
+    for (let x = 0; x < gw; x++) { const on = d[(r * gw + x) * 4 + 3] > 200;
+      if (on) { if (!run) debut = x; run++; if (run > best.n) best = {n: run, x: gx + debut + run / 2, y: top + r}; } else run = 0; }
+  }
+  return best;
+}
+document.fonts.load('100px Aboreto').then(() => { police = true; });
+function dessiner() {   // le film dessiné dans les lettres de SILVERFRAME, zoomé vers la barre du « A »
+  if (cv.style.visibility === 'hidden') return;
+  const dpr = Math.min(devicePixelRatio || 1, 2), W = cv.clientWidth, H = cv.clientHeight;
+  if (cv.width !== W * dpr || cv.height !== H * dpr) { cv.width = W * dpr; cv.height = H * dpr; }
+  const c = cx2; c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, W, H);
+  const mot = 'SILVERFRAME', fs = Math.min(W * .132, H * .5);
+  c.font = `${fs}px Aboreto, Georgia, serif`; c.textBaseline = 'alphabetic';
+  const lw = c.measureText(mot).width, x0 = (W - lw) / 2, y0 = H / 2 + fs * .34;
+  const cle = W + 'x' + H + (police ? 'p' : '');
+  if (pivot.cle !== cle) pivot = Object.assign(cherchePivot(W, H, fs, x0, y0, c.measureText('SILVERFR').width, c.measureText('A').width), {cle});
+  const ox = pivot.x, oy = pivot.y;
+  c.save(); c.translate(ox, oy); c.scale(zoom, zoom); c.translate(-ox, -oy);
+  c.fillStyle = '#fff'; c.fillText(mot, x0, y0); c.restore();
+  if (ov.readyState >= 2) {
+    c.globalCompositeOperation = 'source-in';
+    const vr = ov.videoWidth / ov.videoHeight, cr = W / H; let dw = W, dh = H;
+    if (vr > cr) dw = H * vr; else dh = W / vr;
+    c.drawImage(ov, (W - dw) / 2, (H - dh) / 2, dw, dh);
+    c.globalCompositeOperation = 'source-over';
+  }
+}
+function hauteurBande() { bande.style.height = (rail.scrollWidth - innerWidth + innerHeight * 1.1) + 'px'; }
+function surDefilement() {
+  const h = ouv.offsetHeight - innerHeight, p = clamp(scrollY / h, 0, 1);
+  zoom = fin ? 1 : Math.min(60, Math.pow(1 + p * 1.6, 5.4));
+  const om = clamp(1 - (p - .42) / .22, 0, 1);
+  cv.style.opacity = om; cv.style.visibility = om > 0 ? 'visible' : 'hidden';
+  const q = clamp((p - .62) / .25, 0, 1);
+  bas.style.opacity = q; bas.style.transform = `translateY(${20 - q * 20}px)`; rec.style.opacity = q; voile.style.opacity = q;
+  indice.style.opacity = 1 - clamp(p * 6, 0, 1);
+  const b = bande.getBoundingClientRect(), course = rail.scrollWidth - innerWidth, pb = clamp(-b.top / (bande.offsetHeight - innerHeight), 0, 1);
+  rail.style.transform = `translateX(${-pb * course}px)`; prog.style.width = (pb * 100) + '%';
+  rail.querySelectorAll('img').forEach((im, i) => { im.style.transform = `scale(1.12) translateX(${(pb * course * .06) - i * 6}px)`; });
+}
+addEventListener('scroll', surDefilement, {passive: true});
+addEventListener('resize', () => { hauteurBande(); surDefilement(); });
+document.fonts.ready.then(() => { police = true; surDefilement(); });
+addEventListener('load', () => { hauteurBande(); surDefilement(); });
+hauteurBande(); surDefilement();
+
+/* curseur, aperçu flottant, timecode, heure */
+const cur = document.getElementById('curseur'); let cx = 0, cy = 0, kx = 0, ky = 0, fx = 0, fy = 0, px = 0, py = 0;
+addEventListener('mousemove', e => { cx = e.clientX; cy = e.clientY; fx = e.clientX + 210; fy = e.clientY; cur.classList.toggle('film', !!e.target.closest('[data-film]')); });
+function tc(s) { const f = Math.floor((s % 1) * 24), t = Math.floor(s); return [Math.floor(t / 3600), Math.floor(t / 60) % 60, t % 60, f].map(n => String(n).padStart(2, '0')).join(':'); }
+const tcEl = document.getElementById('tc');
+(function image() {
+  kx += (cx - kx) * .25; ky += (cy - ky) * .25; cur.style.left = kx + 'px'; cur.style.top = ky + 'px';
+  px += (fx - px) * .14; py += (fy - py) * .14; fl.style.left = Math.min(px, innerWidth - 210) + 'px'; fl.style.top = py + 'px';
+  if (fl.classList.contains('on')) ftc.textContent = tc(fv.currentTime);
+  tcEl.textContent = tc(ov.currentTime || 0);
+  dessiner();
+  requestAnimationFrame(image);
+})();
+ov.play().catch(() => {});
+setInterval(() => { document.getElementById('heure').textContent = 'LYON ' + new Date().toLocaleTimeString('fr-FR', {timeZone: 'Europe/Paris'}); }, 1000);
+
+/* lecteur */
+function ouvrir(html, titre, v) { const c = document.getElementById('cadre'); c.className = 'cadre' + (v ? ' v' : ''); c.innerHTML = html; document.getElementById('lt').textContent = titre; document.getElementById('lecteur').classList.add('on'); document.body.style.overflow = 'hidden'; }
+function lire(i) { const f = F[i]; ouvrir(`<iframe src="https://player.vimeo.com/video/${f[1]}?autoplay=1&title=0&byline=0&portrait=0&dnt=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`, f[2].toUpperCase() + ' · ' + f[3], f[7]); }
+function film() { ouvrir(`<video src="${M}silverframe-film.mp4" controls autoplay playsinline></video>`, 'SILVERFRAME · LE FILM', 0); }
+function fermer() { document.getElementById('lecteur').classList.remove('on'); document.getElementById('cadre').innerHTML = ''; document.body.style.overflow = ''; }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') fermer(); });
+document.getElementById('lecteur').addEventListener('click', e => { if (e.target.id === 'lecteur') fermer(); });
+</script>
+</body>
+</html>
