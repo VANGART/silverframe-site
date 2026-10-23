@@ -217,13 +217,13 @@ footer{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;paddin
 
 <header><div class="in">
   <a class="wm" href="#"><img src="media/logo-silverframe-blanc.png" alt=""><span>SILVERFRAME</span></a>
-  <nav><a class="o" href="#films">Films</a><a class="o" href="#agences">Agences</a><a class="o" href="#studio">Studio</a><a href="#contact">Contact</a></nav>
+  <nav><a class="o" href="#films">Films</a><a href="#agences">Agences</a><a class="o" href="#studio">Studio</a><a href="#contact">Contact</a></nav>
   <div class="heure" id="heure">LYON 00:00:00</div>
 </div></header>
 
 <section class="ouv" id="ouv">
   <div class="scene">
-    <video id="ouvv" autoplay muted loop playsinline preload="auto" poster="media/boucle.jpg"><source src="media/boucle.mp4" type="video/mp4"></video>
+    <video id="ouvv" autoplay muted loop playsinline preload="metadata" poster="media/boucle.jpg"><source src="media/boucle.mp4" type="video/mp4"></video>
     <div class="voile" id="voile"></div>
     <canvas id="plonge" aria-hidden="true"></canvas><h1 class="cache-titre">SilverFrame, production vidéo à Lyon</h1>
     <div class="rec" id="rec"><i class="pt"></i><span class="mono" id="tc">00:00:00:00</span><span class="mono">LYON</span></div>
@@ -303,7 +303,7 @@ footer{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;paddin
   <a class="mail" href="mailto:silverframeagency@gmail.com">Écrire à Yann ↗</a>
   <div class="coord">
     <div><span class="lab">Mail</span>silverframeagency@gmail.com</div>
-    <div><span class="lab">Téléphone</span>06 77 52 10 36</div>
+    <div><span class="lab">Téléphone</span><a href="tel:+33677521036">06 77 52 10 36</a></div>
     <div><span class="lab">Studio</span>99 rue de la Part-Dieu<br>69003 Lyon</div>
     <div><span class="lab">Ailleurs</span><a href="https://www.instagram.com/silverframe.agency/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.linkedin.com/company/silverframe-agency/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://vimeo.com/user90211483" target="_blank" rel="noopener">Vimeo</a></div>
   </div>
@@ -382,7 +382,8 @@ let pi = 0; const cit = document.getElementById('cit'), aut = document.getElemen
 puces.innerHTML = PAROLES.map((_, i) => `<button onclick="parole(${i})" aria-label="Témoignage ${i + 1}"></button>`).join('');
 function parole(i) { pi = i; cit.style.opacity = 0; setTimeout(() => { cit.textContent = '« ' + PAROLES[i][0] + ' »'; aut.textContent = PAROLES[i][1]; cit.style.opacity = 1; }, 250);
   puces.querySelectorAll('button').forEach((b, k) => b.classList.toggle('on', k === i)); }
-parole(0); setInterval(() => parole((pi + 1) % PAROLES.length), 7000);
+parole(0); let pause = false; const bloc = document.querySelector('.paroles'); bloc.addEventListener('mouseenter', () => pause = true); bloc.addEventListener('mouseleave', () => pause = false); bloc.addEventListener('focusin', () => pause = true); bloc.addEventListener('focusout', () => pause = false);
+setInterval(() => { if (!pause) parole((pi + 1) % PAROLES.length); }, 7000);
 
 /* défilement : plongée dans la lettre, bande horizontale */
 const ouv = document.getElementById('ouv'), cv = document.getElementById('plonge'), cx2 = cv.getContext('2d');
@@ -464,6 +465,8 @@ function lire(i) { const f = F[i]; ouvrir(`<iframe src="https://player.vimeo.com
 function film() { ouvrir(`<video src="${M}silverframe-film.mp4" controls autoplay playsinline></video>`, 'SILVERFRAME · LE FILM', 0); }
 function fermer() { document.getElementById('lecteur').classList.remove('on'); document.getElementById('cadre').innerHTML = ''; document.body.style.overflow = ''; }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') fermer(); });
+document.querySelectorAll('[data-film]').forEach(el => { el.tabIndex = 0; el.setAttribute('role', 'button'); });
+document.addEventListener('keydown', e => { const el = e.target.closest && e.target.closest('[data-film]'); if (el && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); el.click(); } });
 document.getElementById('lecteur').addEventListener('click', e => { if (e.target.id === 'lecteur') fermer(); });
 </script>
 </body>
