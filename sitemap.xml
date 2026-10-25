@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://www.silverframeagency.com/</loc><lastmod>2026-10-22</lastmod></url>
-<url><loc>https://www.silverframeagency.com/post/credit-agricole-lorem-equipe-de-france-football/</loc><lastmod>2026-10-22</lastmod></url>
-<url><loc>https://www.silverframeagency.com/mentions-legales/</loc><lastmod>2026-10-22</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<url><loc>https://www.silverframeagency.com/</loc><lastmod>2026-10-25</lastmod><xhtml:link rel="alternate" hreflang="fr" href="https://www.silverframeagency.com/"/><xhtml:link rel="alternate" hreflang="en" href="https://www.silverframeagency.com/en/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://www.silverframeagency.com/"/></url>
+<url><loc>https://www.silverframeagency.com/en/</loc><lastmod>2026-10-25</lastmod><xhtml:link rel="alternate" hreflang="fr" href="https://www.silverframeagency.com/"/><xhtml:link rel="alternate" hreflang="en" href="https://www.silverframeagency.com/en/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://www.silverframeagency.com/"/></url>
+<url><loc>https://www.silverframeagency.com/film-entreprise-lyon/</loc><lastmod>2026-10-25</lastmod></url>
+<url><loc>https://www.silverframeagency.com/captation-evenement-lyon/</loc><lastmod>2026-10-25</lastmod></url>
+<url><loc>https://www.silverframeagency.com/video-salon-professionnel-lyon/</loc><lastmod>2026-10-25</lastmod><xhtml:link rel="alternate" hreflang="fr" href="https://www.silverframeagency.com/video-salon-professionnel-lyon/"/><xhtml:link rel="alternate" hreflang="en" href="https://www.silverframeagency.com/en/trade-show-video/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://www.silverframeagency.com/video-salon-professionnel-lyon/"/></url>
+<url><loc>https://www.silverframeagency.com/video-reseaux-sociaux-lyon/</loc><lastmod>2026-10-25</lastmod></url>
+<url><loc>https://www.silverframeagency.com/film-de-marque-publicite-lyon/</loc><lastmod>2026-10-25</lastmod></url>
+<url><loc>https://www.silverframeagency.com/agences-marque-blanche/</loc><lastmod>2026-10-25</lastmod><xhtml:link rel="alternate" hreflang="fr" href="https://www.silverframeagency.com/agences-marque-blanche/"/><xhtml:link rel="alternate" hreflang="en" href="https://www.silverframeagency.com/en/agencies/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://www.silverframeagency.com/agences-marque-blanche/"/></url>
+<url><loc>https://www.silverframeagency.com/montage-etalonnage-lyon/</loc><lastmod>2026-10-25</lastmod></url>
+<url><loc>https://www.silverframeagency.com/en/agencies/</loc><lastmod>2026-10-25</lastmod><xhtml:link rel="alternate" hreflang="fr" href="https://www.silverframeagency.com/agences-marque-blanche/"/><xhtml:link rel="alternate" hreflang="en" href="https://www.silverframeagency.com/en/agencies/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://www.silverframeagency.com/agences-marque-blanche/"/></url>
+<url><loc>https://www.silverframeagency.com/en/trade-show-video/</loc><lastmod>2026-10-25</lastmod><xhtml:link rel="alternate" hreflang="fr" href="https://www.silverframeagency.com/video-salon-professionnel-lyon/"/><xhtml:link rel="alternate" hreflang="en" href="https://www.silverframeagency.com/en/trade-show-video/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://www.silverframeagency.com/video-salon-professionnel-lyon/"/></url>
+<url><loc>https://www.silverframeagency.com/realisations/</loc><lastmod>2026-10-25</lastmod></url>
+<url><loc>https://www.silverframeagency.com/post/credit-agricole-lorem-equipe-de-france-football/</loc><lastmod>2026-10-25</lastmod></url>
+<url><loc>https://www.silverframeagency.com/realisations/don-papa-winterlandia/</loc><lastmod>2026-10-25</lastmod></url>
+<url><loc>https://www.silverframeagency.com/realisations/keyena-artik/</loc><lastmod>2026-10-25</lastmod></url>
+<url><loc>https://www.silverframeagency.com/realisations/the-ink-factory-aftermovie/</loc><lastmod>2026-10-25</lastmod></url>
+<url><loc>https://www.silverframeagency.com/realisations/vjm-sertissage-macro/</loc><lastmod>2026-10-25</lastmod></url>
+<url><loc>https://www.silverframeagency.com/realisations/ozur-maillots/</loc><lastmod>2026-10-25</lastmod></url>
+<url><loc>https://www.silverframeagency.com/mentions-legales/</loc><lastmod>2026-10-25</lastmod></url>
 </urlset>
