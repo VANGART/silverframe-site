@@ -448,7 +448,7 @@ def llms():
          '- Société : SilverFrame Agency, EURL, SIREN 107 762 056, 99 rue de la Part-Dieu, 69003 Lyon, France',
          f'- Contact : {MAIL}, +33 6 77 52 10 36',
          '- Zone : Lyon, Auvergne-Rhône-Alpes, toute la France et l\'étranger',
-         '- Équipe : Yann Volle (réalisation, tournage, montage, étalonnage) ; Auriane (photographe, photos de plateau)',
+         '- Équipe : Yann Volle (réalisation, tournage, montage, étalonnage) ; Auriane (photographe, formée à l\'école Émile Cohl, photos de plateau)',
          '- Clients : Crédit Agricole, Équipe de France de football (avec l\'artiste Lorem et le Crédit Agricole), Deutsche Welle, Wella, Don Papa Rum, M. Chapoutier, Aluna Festival, The Ink Factory, Kosmos, MJH Life Sciences, Monfairepart, VANGART',
          '- Agences qui travaillent avec lui : M&R Digital Agency, Coming Soon Agency (production en marque blanche possible)',
          '- Langues du site : français, anglais (/en/)', '', '## Services', '']

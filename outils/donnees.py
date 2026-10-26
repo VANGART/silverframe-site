@@ -12,8 +12,8 @@ MAJ = '2026-10-25'
 #        libellé fr, libellé en, largeur vignette, hauteur vignette, mise en ligne Vimeo, durée en secondes)
 FILMS = {
   'ca-fff':       ('1217039625', 'Crédit Agricole × FFF', "Un match de l'Équipe de France, avec l'artiste Lorem", 'A France national football team match, with the artist Lorem', 'Réalisation, tournage, montage', 'Direction, shoot, edit', '1:06', 1, '2026', 'social', 'Réseaux sociaux', 'Social media', 900, 1600, '2026-08-10', 66),
-  'don-papa':     ('1168529161', 'Don Papa Rum', 'Un événement de la marque, filmé en vertical', 'A brand event, shot vertically', 'Captation, montage vertical', 'Coverage, vertical edit', '0:45', 1, '2026', 'event', 'Événementiel', 'Events', 1280, 720, '2026-02-26', 45),
-  'ozur':         ('1188034228', 'Ozur', 'Les maillots, portés par une nageuse', 'The swimwear collection, worn by a swimmer', 'Tournage, montage vertical', 'Shoot, vertical edit', '0:49', 1, '2026', 'social', 'Mode', 'Fashion', 1280, 624, '2026-04-30', 49),
+  'don-papa':     ('1168529161', 'Don Papa Rum', 'Winterlandia, un bar éphémère en station de ski', 'Winterlandia, a pop-up bar in a ski resort', 'Captation, montage vertical', 'Coverage, vertical edit', '0:45', 1, '2026', 'event', 'Événementiel', 'Events', 1280, 720, '2026-02-26', 45),
+  'ozur':         ('1188034228', 'Ozur', 'Les maillots, portés par une nageuse olympique', 'The swimwear collection, worn by an Olympic swimmer', 'Tournage, montage vertical', 'Shoot, vertical edit', '0:49', 1, '2026', 'social', 'Mode', 'Fashion', 1280, 624, '2026-04-30', 49),
   'ink-factory':  ('1188031932', 'The Ink Factory', 'Aftermovie de la convention internationale de tatouage de Lyon', 'Aftermovie of the Lyon International Tattoo Convention', 'Captation, montage, étalonnage', 'Coverage, edit, grade', '2:34', 0, '2026', 'event', 'Aftermovie', 'Aftermovie', 1280, 624, '2026-04-30', 154),
   'vjm':          ('1176655479', 'VJM', 'Le sertissage, filmé en macro', 'Stone setting, shot in macro', 'Tournage macro, étalonnage', 'Macro shoot, grade', '0:24', 0, '2026', 'corporate', 'Joaillerie', 'Jewellery', 1280, 720, '2026-03-24', 24),
   'sunborn':      ('1156001897', 'Sunborn', '« Glacier », clip', '"Glacier", music video', 'Réalisation, montage, étalonnage', 'Direction, edit, grade', '4:58', 0, '2026', 'clip', 'Clip', 'Music video', 1280, 720, '2026-01-19', 298),
@@ -32,9 +32,9 @@ UNE = 'ca-fff'
 ORDRE = ['ca-fff', 'don-papa', 'keyena', 'ca-candice', 'ca-campagne', 'ink-factory', 'ozur', 'vjm', 'vangart-macro', 'sunborn', 'telethon', 'monfairepart', 'ultimate', 'vangart-fab', 'bears']
 
 # Titres courts de l'accueil (grille des films), repris du site du 22/10/2026
-COURT = {'fr': {'ca-fff': "Un match de l'Équipe de France, avec l'artiste Lorem", 'ink-factory': 'Aftermovie de la convention de tatouage', 'ozur': 'Les maillots, portés par une nageuse',
+COURT = {'fr': {'ca-fff': "Un match de l'Équipe de France, avec l'artiste Lorem", 'ink-factory': 'Aftermovie de la convention de tatouage', 'ozur': 'Les maillots, portés par une nageuse olympique',
                 'sunborn': '« Glacier »', 'keyena': 'Des pointes peintes à la main, un stade de nuit', 'ca-candice': 'Candice Chlovy, agricultrice', 'ca-campagne': 'Campagne régionale',
-                'telethon': 'Une œuvre pour le Téléthon', 'ultimate': '« Ultimate »', 'bears': '« Hometown »', 'don-papa': 'Un événement de la marque'},
+                'telethon': 'Une œuvre pour le Téléthon', 'ultimate': '« Ultimate »', 'bears': '« Hometown »', 'don-papa': 'Winterlandia, un bar éphémère en station'},
          'en': {'ca-fff': 'A France national team match, with the artist Lorem', 'ink-factory': 'Tattoo convention aftermovie', 'sunborn': '"Glacier"', 'keyena': 'Hand-painted spikes, a stadium at night',
                 'ca-candice': 'Candice Chlovy, a farmer', 'ca-campagne': 'Regional campaign', 'telethon': 'An artwork for the Téléthon', 'ultimate': '"Ultimate"', 'bears': '"Hometown"'}}
 
