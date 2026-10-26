@@ -20,7 +20,20 @@ CASK = {c['cle']: c for c in CAS}
 FILM_CAS = {c['film']: c for c in CAS}
 ECRITS = []
 
+def typo_fr(h):
+    """Typographie française (26/10/2026) : espace insécable avant : ; ? ! » et après «, dans le texte visible
+    et les attributs (title, description, alt, aria-label), jamais dans <style> ni <script> (le JSON-LD garde ses espaces)."""
+    def fix(t):
+        t = re.sub(r' ([:;?!»])', '\u00a0\\1', t)
+        return re.sub(r'« ', '«\u00a0', t)
+    morceaux = re.split(r'(<(?:style|script)\b.*?</(?:style|script)>)', h, flags=re.S)
+    for i in range(0, len(morceaux), 2):
+        morceaux[i] = re.sub(r'>([^<]+)<', lambda m: '>' + fix(m.group(1)) + '<', morceaux[i])
+        morceaux[i] = re.sub(r'((?:content|alt|aria-label|title|data-titre|data-nom)=")([^"]*)"', lambda m: m.group(1) + fix(m.group(2)) + '"', morceaux[i])
+    return ''.join(morceaux)
+
 def ecrire(chemin, contenu):
+    if '<html lang="fr"' in contenu: contenu = typo_fr(contenu)
     p = os.path.join(RAC, chemin.lstrip('/'))
     if p.endswith('/'): p += 'index.html'
     os.makedirs(os.path.dirname(p), exist_ok=True)
@@ -80,7 +93,7 @@ def personne():
             'jobTitle': 'Réalisateur, cadreur, monteur, étalonneur', 'image': SITE + '/media/yann.jpg',
             'worksFor': {'@id': ORG_ID}, 'url': SITE + '/#studio',
             'address': {'@type': 'PostalAddress', 'addressLocality': 'Lyon', 'addressCountry': 'FR'},
-            'knowsAbout': ['Réalisation', 'Tournage', 'Montage', 'Étalonnage', 'DaVinci Resolve'],
+            'knowsAbout': ['Réalisation', 'Tournage', 'Montage', 'Étalonnage'],
             'sameAs': ['https://vimeo.com/user90211483']}
 
 def video(k, lang, page_url):
@@ -147,7 +160,7 @@ def bloc_contact(lang, sujet):
                 '<div><span class="mono">Studio</span>99 rue de la Part-Dieu<br>69003 Lyon</div><div><span class="mono">Ailleurs</span><a href="https://vimeo.com/user90211483" rel="noopener" target="_blank">Vimeo</a> · <a href="https://www.instagram.com/silverframe.agency/" rel="noopener" target="_blank">Instagram</a></div></div></section>')
     return (f'<section class="contact" id="contact"><p class="mono">A brief, a date, an idea</p>'
             f'<a class="mail" href="mailto:{MAIL}?subject={sub}">Email Yann ↗</a>'
-            '<p class="devis">Quote on request. Send the brief, even a rough one: Yann comes back with an approach and a quote.</p>'
+            '<p class="devis">Quote on request. Send the brief, even a rough one, and Yann will come back to you with an approach and a quote.</p>'
             f'<div class="coord"><div><span class="mono">Email</span><a href="mailto:{MAIL}?subject={sub}">{MAIL}</a></div><div><span class="mono">Phone</span><a href="tel:{TEL}">+33 6 77 52 10 36</a></div>'
             '<div><span class="mono">Studio</span>99 rue de la Part-Dieu<br>69003 Lyon, France</div><div><span class="mono">Elsewhere</span><a href="https://vimeo.com/user90211483" rel="noopener" target="_blank">Vimeo</a> · <a href="https://www.instagram.com/silverframe.agency/" rel="noopener" target="_blank">Instagram</a></div></div></section>')
 
@@ -156,6 +169,7 @@ def figure_film(k, lang, lien_cas=True, legende=True):
     f = FILMS[k]
     nom = nom_client(f[1], lang); ti = titre_film(k, lang)
     gen = f[4] if lang == 'fr' else f[5]
+    sep = ' : ' if lang == 'fr' else ': '
     lire = 'LIRE' if lang == 'fr' else 'PLAY'
     aria = (f'Lire le film {nom}, {ti} ({duree_txt(k, lang)})' if lang == 'fr' else f'Play the film {nom}, {ti} ({duree_txt(k, lang)})')
     lien = ''
@@ -165,7 +179,7 @@ def figure_film(k, lang, lien_cas=True, legende=True):
     sizes = '(max-width: 820px) 100vw, 270px' if f[7] else '(max-width: 820px) 100vw, 45vw'
     return (f'<figure class="film{" v" if f[7] else ""}"><div class="cadre"><button type="button" class="lance" data-vimeo="{f[0]}" data-titre="{E(nom + " · " + ti)}" aria-label="{E(aria)}">'
             f'{picture(k, sizes, "")}<span class="jouer"><i>{SVG_PLAY}</i>{lire} · {f[6]}</span></button></div>'
-            + (f'<figcaption><b>{E(nom)}</b><span>{E(ti)}</span><span class="mono">{E(gen)} : Yann Volle · {f[8]}</span>{lien}</figcaption>' if legende else '') + '</figure>')
+            + (f'<figcaption><b>{E(nom)}</b><span>{E(ti)}</span><span class="mono">{E(gen)}{sep}Yann Volle · {f[8]}</span>{lien}</figcaption>' if legende else '') + '</figure>')
 
 def page(lang, url, titre, desc, corps, noeuds, fr=None, en=None, og='website', image=None, actif=None):
     alt = hreflang(fr or url, en) if (fr or en) else f'<link rel="alternate" hreflang="{lang}" href="{SITE}{url}">'
@@ -314,7 +328,7 @@ def accueil(lang):
         en_serv = [('/en/agencies/', 'For agencies', 'White-label production, under your name', ''), ('/en/trade-show-video/', 'Trade shows', 'Stand film, vertical formats, aftermovie', ''),
                    (SV['entreprise']['url'], 'Corporate films', 'Portraits, craft, workshops (page in French)', 'fr'), (SV['evenement']['url'], 'Events and aftermovies', 'Coverage, aftermovie, social formats (page in French)', 'fr'),
                    (SV['reseaux']['url'], 'Social media', '9:16, 1:1 and 16:9 formats (page in French)', 'fr'), (SV['marque']['url'], 'Brand films and ads', 'Product, craft, brand image (page in French)', 'fr'),
-                   (SV['montage']['url'], 'Editing and colour grading', 'Edit, grade, music videos (page in French)', 'fr')]
+                   (SV['montage']['url'], 'Editing and colour grading', 'Editing, grading, music videos (page in French)', 'fr')]
         T['SERVICES'] = ''.join(f'<a class="rang" href="{u}"{" hreflang=" + chr(34) + h + chr(34) if h else ""}><b>{E(n)}</b><span>{E(d)}</span><i aria-hidden="true">→</i></a>' for u, n, d, h in en_serv)
     T['LOGOS'] = ''.join(f'<li{" class=" + chr(34) + "fort" + chr(34) if i < 5 else ""}><picture><source type="image/webp" srcset="/media/logos/{l}.webp"><img src="/media/logos/{l}.png" alt="{E(nom_client(n, lang))}" width="{w}" height="{h}" decoding="async"></picture></li>' for i, (l, n, w, h) in enumerate(LOGOS))
     # deux témoignages visibles (les autres restent dans llms-full.txt)
@@ -434,7 +448,7 @@ def llms():
          '- Société : SilverFrame Agency, EURL, SIREN 107 762 056, 99 rue de la Part-Dieu, 69003 Lyon, France',
          f'- Contact : {MAIL}, +33 6 77 52 10 36',
          '- Zone : Lyon, Auvergne-Rhône-Alpes, toute la France et l\'étranger',
-         '- Équipe : Yann Volle (réalisation, tournage, montage, étalonnage) ; Auriane (photographe, formée à l\'école Émile Cohl)',
+         '- Équipe : Yann Volle (réalisation, tournage, montage, étalonnage) ; Auriane (photographe, photos de plateau)',
          '- Clients : Crédit Agricole, Équipe de France de football (avec l\'artiste Lorem et le Crédit Agricole), Deutsche Welle, Wella, Don Papa Rum, M. Chapoutier, Aluna Festival, The Ink Factory, Kosmos, MJH Life Sciences, Monfairepart, VANGART',
          '- Agences qui travaillent avec lui : M&R Digital Agency, Coming Soon Agency (production en marque blanche possible)',
          '- Langues du site : français, anglais (/en/)', '', '## Services', '']
@@ -469,7 +483,7 @@ def main():
     for c in CAS: ecrire(c['url'], page_cas(c))
     # mentions légales (page écrite à la main) : seul le pied de page est remis à jour par le générateur
     ml = os.path.join(RAC, 'mentions-legales/index.html'); h = open(ml, encoding='utf-8').read()
-    open(ml, 'w', encoding='utf-8').write(re.sub(r'<footer.*?</footer>', lambda m: plan_site('fr'), h, count=1, flags=re.S).replace('/media/pages.css?v=3', '/media/pages.css?v=4'))
+    open(ml, 'w', encoding='utf-8').write(typo_fr(re.sub(r'<footer.*?</footer>', lambda m: plan_site('fr'), h, count=1, flags=re.S).replace('/media/pages.css?v=3', '/media/pages.css?v=4')))
     ecrire('/realisations/', page_realisations())
     open(os.path.join(RAC, 'sitemap.xml'), 'w').write(sitemap())
     open(os.path.join(RAC, 'robots.txt'), 'w').write(ROBOTS)
