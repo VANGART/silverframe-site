@@ -106,30 +106,16 @@ def hreflang(fr, en):
             f'<link rel="alternate" hreflang="x-default" href="{SITE}{fr}">')
 
 def plan_site(lang):
+    """Pied de page sobre (26/10/2026) : une ligne de liens vers les services et les réalisations (maillage interne), puis l'identité."""
     if lang == 'fr':
-        serv = ''.join(f'<li><a href="{s["url"]}">{E(s["nav"])}</a></li>' for s in SERVICES)
-        cas = '<li><a href="/realisations/">Toutes les réalisations</a></li>' + ''.join(f'<li><a href="{c["url"]}">{E(FILMS[c["film"]][1])}</a></li>' for c in CAS)
-        site = ('<li><a href="/">Accueil</a></li><li><a href="/#films">Tous les films</a></li><li><a href="/#studio">Le studio</a></li>'
-                '<li><a href="/#questions">Questions fréquentes</a></li><li><a href="/mentions-legales/">Mentions légales · Confidentialité</a></li>'
-                '<li><a href="/en/" hreflang="en" lang="en">English version</a></li>')
-        t = ('Services', 'Réalisations', 'SilverFrame', 'Contact')
+        liens = [(s['url'], s['nav'], '') for s in SERVICES] + [('/realisations/', 'Réalisations', ''), ('/mentions-legales/', 'Mentions légales', ''), ('/en/', 'English', 'en')]
+        nom = 'Plan du site'
     else:
-        serv = ''.join(f'<li><a href="{s["url"]}">{E(s["nav"])}</a></li>' for s in SERVICES_EN) + \
-               ''.join(f'<li><a href="{SV[k]["url"]}" hreflang="fr" lang="fr">{n} (FR)</a></li>' for k, n in
-                       [('entreprise', 'Corporate films'), ('evenement', 'Events and aftermovies'), ('reseaux', 'Social media'), ('marque', 'Brand films and ads'), ('montage', 'Editing and grading')])
-        cas = '<li><a href="/realisations/" hreflang="fr" lang="fr">Case studies (FR)</a></li>' + ''.join(f'<li><a href="{c["url"]}" hreflang="fr" lang="fr">{E(FILMS[c["film"]][1])}</a></li>' for c in CAS)
-        site = ('<li><a href="/en/">Home</a></li><li><a href="/en/#films">All films</a></li><li><a href="/en/#studio">The studio</a></li>'
-                '<li><a href="/en/#questions">Questions</a></li><li><a href="/mentions-legales/" hreflang="fr" lang="fr">Legal notice (FR)</a></li>'
-                '<li><a href="/" hreflang="fr" lang="fr">Version française</a></li>')
-        t = ('Services', 'Case studies', 'SilverFrame', 'Contact')
-    contact = (f'<li>SilverFrame Agency · EURL</li><li>99 rue de la Part-Dieu, 69003 Lyon{", France" if lang == "en" else ""}</li>'
-               f'<li><a href="mailto:{MAIL}">{MAIL}</a></li><li><a href="tel:{TEL}">{"06 77 52 10 36" if lang == "fr" else "+33 6 77 52 10 36"}</a></li>'
-               '<li><a href="https://www.instagram.com/silverframe.agency/" rel="noopener" target="_blank">Instagram</a> · <a href="https://www.linkedin.com/company/silverframe-agency/" rel="noopener" target="_blank">LinkedIn</a> · <a href="https://vimeo.com/user90211483" rel="noopener" target="_blank">Vimeo</a></li>')
-    sous = 'Production vidéo à Lyon · réalisation, tournage, montage, étalonnage' if lang == 'fr' else 'Video production in Lyon, France'
-    return (f'<footer><nav class="plan-site" aria-label="{"Plan du site" if lang == "fr" else "Site map"}">'
-            f'<div><p class="lab">{t[0]}</p><ul>{serv}</ul></div><div><p class="lab">{t[1]}</p><ul>{cas}</ul></div>'
-            f'<div><p class="lab">{t[2]}</p><ul>{site}</ul></div><div><p class="lab">{t[3]}</p><ul>{contact}</ul></div></nav>'
-            f'<div class="bas-page mono"><span>© 2026 SilverFrame Agency · EURL · SIREN 107 762 056</span><span>{sous}</span></div></footer>')
+        liens = [(s['url'], s['nav'], '') for s in SERVICES_EN] + [('/en/#services', 'All services', ''), ('/realisations/', 'Case studies (FR)', 'fr'), ('/mentions-legales/', 'Legal notice (FR)', 'fr'), ('/', 'Français', 'fr')]
+        nom = 'Site map'
+    nav = ''.join(f'<a href="{u}"{(" hreflang=" + chr(34) + h + chr(34) + " lang=" + chr(34) + h + chr(34)) if h else ""}>{E(n)}</a>' for u, n, h in liens)
+    return (f'<footer class="pied"><nav aria-label="{nom}">{nav}</nav>'
+            f'<span>© 2026 SilverFrame Agency · EURL · SIREN 107 762 056 · 99 rue de la Part-Dieu, 69003 Lyon</span></footer>')
 
 def entete(lang, actif, autre):
     if lang == 'fr':
@@ -154,19 +140,19 @@ def fil(items, lang):
 def bloc_contact(lang, sujet):
     sub = quote(sujet)
     if lang == 'fr':
-        return (f'<section class="contact" id="contact"><div class="halo"></div><p class="lab">Un brief, une date, une idée</p>'
+        return (f'<section class="contact" id="contact"><p class="mono">Un brief, une date, une idée</p>'
                 f'<a class="mail" href="mailto:{MAIL}?subject={sub}">Écrire à Yann ↗</a>'
-                '<p class="devis">Tous nos films sont sur devis. Envoyez le brief, même incomplet : Yann revient avec une approche et un chiffrage.</p>'
-                f'<div class="coord"><div><span class="lab">Mail</span><a href="mailto:{MAIL}?subject={sub}">{MAIL}</a></div><div><span class="lab">Téléphone</span><a href="tel:{TEL}">06 77 52 10 36</a></div>'
-                '<div><span class="lab">Studio</span>99 rue de la Part-Dieu<br>69003 Lyon</div><div><span class="lab">Films</span><a href="/#films">Les 15 films</a> · <a href="/realisations/">Réalisations</a></div></div></section>')
-    return (f'<section class="contact" id="contact"><div class="halo"></div><p class="lab">A brief, a date, an idea</p>'
+                '<p class="devis">Sur devis. Envoyez le brief, même incomplet : Yann revient avec une approche et un chiffrage.</p>'
+                f'<div class="coord"><div><span class="mono">Mail</span><a href="mailto:{MAIL}?subject={sub}">{MAIL}</a></div><div><span class="mono">Téléphone</span><a href="tel:{TEL}">06 77 52 10 36</a></div>'
+                '<div><span class="mono">Studio</span>99 rue de la Part-Dieu<br>69003 Lyon</div><div><span class="mono">Ailleurs</span><a href="https://vimeo.com/user90211483" rel="noopener" target="_blank">Vimeo</a> · <a href="https://www.instagram.com/silverframe.agency/" rel="noopener" target="_blank">Instagram</a></div></div></section>')
+    return (f'<section class="contact" id="contact"><p class="mono">A brief, a date, an idea</p>'
             f'<a class="mail" href="mailto:{MAIL}?subject={sub}">Email Yann ↗</a>'
-            '<p class="devis">Every film is quoted on request. Send the brief, even a rough one: Yann comes back with an approach and a quote.</p>'
-            f'<div class="coord"><div><span class="lab">Email</span><a href="mailto:{MAIL}?subject={sub}">{MAIL}</a></div><div><span class="lab">Phone</span><a href="tel:{TEL}">+33 6 77 52 10 36</a></div>'
-            '<div><span class="lab">Studio</span>99 rue de la Part-Dieu<br>69003 Lyon, France</div><div><span class="lab">Films</span><a href="/en/#films">All 15 films</a></div></div></section>')
+            '<p class="devis">Quote on request. Send the brief, even a rough one: Yann comes back with an approach and a quote.</p>'
+            f'<div class="coord"><div><span class="mono">Email</span><a href="mailto:{MAIL}?subject={sub}">{MAIL}</a></div><div><span class="mono">Phone</span><a href="tel:{TEL}">+33 6 77 52 10 36</a></div>'
+            '<div><span class="mono">Studio</span>99 rue de la Part-Dieu<br>69003 Lyon, France</div><div><span class="mono">Elsewhere</span><a href="https://vimeo.com/user90211483" rel="noopener" target="_blank">Vimeo</a> · <a href="https://www.instagram.com/silverframe.agency/" rel="noopener" target="_blank">Instagram</a></div></div></section>')
 
 SVG_PLAY = '<svg viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0l12 7-12 7z"/></svg>'
-def figure_film(k, lang, lien_cas=True):
+def figure_film(k, lang, lien_cas=True, legende=True):
     f = FILMS[k]
     nom = nom_client(f[1], lang); ti = titre_film(k, lang)
     gen = f[4] if lang == 'fr' else f[5]
@@ -179,7 +165,7 @@ def figure_film(k, lang, lien_cas=True):
     sizes = '(max-width: 820px) 100vw, 270px' if f[7] else '(max-width: 820px) 100vw, 45vw'
     return (f'<figure class="film{" v" if f[7] else ""}"><div class="cadre"><button type="button" class="lance" data-vimeo="{f[0]}" data-titre="{E(nom + " · " + ti)}" aria-label="{E(aria)}">'
             f'{picture(k, sizes, "")}<span class="jouer"><i>{SVG_PLAY}</i>{lire} · {f[6]}</span></button></div>'
-            f'<figcaption><b>{E(nom)}</b><span>{E(ti)}</span><span class="mono">{E(gen)} : Yann Volle · {f[8]}</span>{lien}</figcaption></figure>')
+            + (f'<figcaption><b>{E(nom)}</b><span>{E(ti)}</span><span class="mono">{E(gen)} : Yann Volle · {f[8]}</span>{lien}</figcaption>' if legende else '') + '</figure>')
 
 def page(lang, url, titre, desc, corps, noeuds, fr=None, en=None, og='website', image=None, actif=None):
     alt = hreflang(fr or url, en) if (fr or en) else f'<link rel="alternate" hreflang="{lang}" href="{SITE}{url}">'
@@ -200,7 +186,7 @@ def page(lang, url, titre, desc, corps, noeuds, fr=None, en=None, og='website', 
 <meta property="og:title" content="{E(titre)}"><meta property="og:description" content="{E(desc)}"><meta property="og:url" content="{SITE}{url}">
 <meta property="og:image" content="{img}"><meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="/media/polices/syne-700-800.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/media/pages.css?v=3">
+<link rel="stylesheet" href="/media/pages.css?v=4">
 <script type="application/ld+json">{jsonld(noeuds)}</script>
 </head>
 <body>
@@ -215,11 +201,11 @@ def page(lang, url, titre, desc, corps, noeuds, fr=None, en=None, og='website', 
 '''
 
 def liste_liens(titre, items, lang):
-    rangs = ''.join(f'<a class="rang" href="{u}"{h}><b>{E(n)}</b><span>{E(d)}</span><i aria-hidden="true">→</i></a>' for u, n, d, h in items)
+    rangs = ''.join(f'<a class="rang" href="{u}"{h}><b>{E(n)}</b><i aria-hidden="true">→</i></a>' for u, n, d, h in items)
     return f'<section class="liste"><div class="t"><h2>{E(titre)}</h2></div>{rangs}</section>'
 
 def blocs_html(blocs):
-    return ''.join(f'<section class="bloc"><p class="lab">{E(lab)}</p><div class="corps"><h2>{E(h2)}</h2>{html_}</div></section>' for lab, h2, html_ in blocs)
+    return ''.join(f'<section class="bloc"><h2>{E(h2)}</h2>{html_}</section>' for h2, html_ in blocs)
 
 # ---------------------------------------------------------------- pages services
 def page_service(s, lang):
@@ -228,13 +214,11 @@ def page_service(s, lang):
     en_url = s.get('en') if lang == 'fr' else url
     acc = '/' if lang == 'fr' else '/en/'
     items = [('Accueil' if lang == 'fr' else 'Home', acc), (s['h1'], url)]
-    postes = ''.join(f'<span>{E(p)}</span>' for p in s['postes'])
+    livr = ' · '.join(E(l) for l in s['livrables'])
     corps = (fil(items, lang) +
-             f'<div class="tete"><p class="lab">{"Service" if lang == "fr" else "Service"}</p><div><h1>{E(s["h1"])}</h1><p class="intro">{s["intro"]}</p><div class="postes">{postes}</div></div></div>' +
-             f'<section class="films" aria-label="{"Films" if lang == "fr" else "Films"}">' + ''.join(figure_film(k, lang) for k in s['films']) + '</section>' +
-             blocs_html(s['blocs']) +
-             f'<section class="bloc"><p class="lab">{"Livrables" if lang == "fr" else "Deliverables"}</p><div class="corps"><h2>{"Ce que vous recevez" if lang == "fr" else "What you get"}</h2><div class="pastilles">' +
-             ''.join(f'<span>{E(l)}</span>' for l in s['livrables']) + '</div></div></section>')
+             f'<div class="tete"><h1>{E(s["h1"])}</h1><p class="intro">{s["intro"]}</p><p class="livr mono">{"Livrables" if lang == "fr" else "Deliverables"} · {livr}</p></div>' +
+             f'<section class="films" aria-label="Films">' + ''.join(figure_film(k, lang, lien_cas=(lang == 'en')) for k in s['films']) + '</section>' +
+             blocs_html(s['blocs']))
     if lang == 'fr':
         lies = [(SV[k]['url'], SV[k]['nav'], SV[k]['court'], '') for k in s['lies']]
         cas = [(CASK[k]['url'], FILMS[CASK[k]['film']][1], CASK[k]['resume'], '') for k in s.get('cas', []) if k in CASK]
@@ -263,18 +247,15 @@ def page_cas(c):
           f'<dt>Sur Vimeo</dt><dd><a class="lien" href="https://vimeo.com/{f[0]}" rel="noopener" target="_blank">vimeo.com/{f[0]}</a></dd></dl>')
     if c.get('ancien'):
         texte = ANCIEN_CA
-        lab = 'Coulisses · 12 août 2026'
     else:
-        texte = (f'<section class="bloc"><p class="lab">Contexte</p><div class="corps"><h2>Le projet</h2>{c["contexte"]}</div></section>'
-                 f'<section class="bloc"><p class="lab">Le défi</p><div class="corps"><h2>Ce qui rendait le film difficile</h2>{c["defi"]}</div></section>'
-                 f'<section class="bloc"><p class="lab">L\'approche</p><div class="corps"><h2>Comment Yann l\'a filmé</h2>{c["approche"]}</div></section>')
-        lab = 'Réalisation · ' + f[8]
+        texte = (f'<section class="bloc"><h2>Le projet</h2>{c["contexte"]}<h3>Ce qui le rendait difficile</h3>{c["defi"]}'
+                 f'<h3>Comment Yann l\'a filmé</h3>{c["approche"]}</section>')
     corps = (fil(items, 'fr') +
-             f'<div class="tete"><p class="lab">{E(lab)}</p><div><h1>{E(c["h1"])}</h1><p class="intro">{E(c["resume"])}.</p></div></div>' +
-             f'<section class="films" aria-label="Le film">{figure_film(k, "fr", lien_cas=False)}</section>' + texte +
-             f'<section class="bloc"><p class="lab">Livrables</p><div class="corps"><h2>Le film en bref</h2>{dl}</div></section>' +
-             liste_liens('Services liés', [(SV[x]['url'], SV[x]['nav'], SV[x]['court'], '') for x in c['services']], 'fr') +
-             liste_liens('Autres réalisations', [(o['url'], FILMS[o['film']][1], o['resume'], '') for o in CAS if o['cle'] != c['cle']], 'fr') +
+             f'<div class="tete"><h1>{E(c["h1"])}</h1><p class="intro">{E(c["resume"])}.</p></div>' +
+             f'<section class="films" aria-label="Le film">{figure_film(k, "fr", lien_cas=False, legende=False)}</section>' + texte +
+             f'<section class="bloc"><h2>Le film en bref</h2>{dl}</section>' +
+             liste_liens('Services liés', [(SV[x]['url'], SV[x]['nav'], '', '') for x in c['services']], 'fr') +
+             liste_liens('Autres réalisations', [(o['url'], FILMS[o['film']][1], '', '') for o in CAS if o['cle'] != c['cle']], 'fr') +
              bloc_contact('fr', 'Projet · ' + f[1]))
     noeuds = [{'@type': 'Article', '@id': SITE + url + '#article', 'headline': c['h1'][:110], 'description': c['desc'], 'url': SITE + url, 'mainEntityOfPage': SITE + url,
                'inLanguage': 'fr', 'datePublished': c['date'], 'dateModified': MAJ, 'image': [f'{SITE}/media/films/{k}.jpg'],
@@ -282,27 +263,23 @@ def page_cas(c):
               dict(ariane(items), **{'@id': SITE + url + '#ariane'}), organisation(), personne(), video(k, 'fr', url)]
     return page('fr', url, c['titre'], c['desc'], corps, noeuds, og='article', image=f'{SITE}/media/films/{k}.jpg')
 
-ANCIEN_CA = ('<section class="bloc"><p class="lab">Contexte</p><div class="corps"><h2>Trois mondes dans un film</h2>'
- '<p>Pour lancer sa carte Mozaïc, le Crédit Agricole voulait un film qui tienne trois choses en même temps&nbsp;: le design signé par l\'artiste Lorem, l\'énergie de l\'Équipe de France de football et le sérieux d\'une grande banque.</p>'
- '<p>Sur le papier, ces trois mondes n\'ont pas grand-chose à se dire. C\'est justement ce qui nous a plu.</p></div></section>'
- '<section class="bloc"><p class="lab">Le défi</p><div class="corps"><h2>Le vrai problème</h2>'
- '<p>Il était éditorial, pas technique. Laisser de la place au geste de Lorem sans faire du film une vitrine graphique. Montrer le terrain sans tomber dans le cliché sportif. Et garder la rigueur qu\'une banque attend, parce que son image tient sur la confiance.</p></div></section>'
- '<section class="bloc"><p class="lab">L\'approche</p><div class="corps"><h2>Comment on l\'a fait</h2>'
- '<p>On a filmé le design de Lorem en train de se faire, comme un geste en mouvement, qui répond à l\'énergie du match. Le football sert de terrain à cette création. La marque tient l\'ensemble, présente sans prendre toute la place.</p>'
- '<p>Tout s\'est réglé plan par plan&nbsp;: le cadrage, le rythme du montage, la musique, l\'étalonnage. Chaque choix devait servir le film entier, jamais un seul des trois univers.</p></div></section>'
- '<section class="bloc"><p class="lab">Le résultat</p><div class="corps"><h2>Un film, plusieurs voix</h2>'
- '<p>Le film parle aux fans de foot comme aux clients de la banque, et il garde la signature visuelle de Lorem. Faire tenir plusieurs voix, artistes, sport et institution, dans un seul récit&nbsp;: c\'est le genre de projet qu\'on préfère.</p>'
- '<p>Vous avez un film avec plusieurs marques ou partenaires à faire travailler ensemble&nbsp;?</p></div></section>')
+ANCIEN_CA = ('<section class="bloc"><h2>Trois mondes dans un film</h2>'
+ '<p>Pour lancer sa carte Mozaïc, le Crédit Agricole voulait un film qui tienne trois choses à la fois&nbsp;: le design de l\'artiste Lorem, l\'énergie de l\'Équipe de France de football et le sérieux d\'une grande banque. Sur le papier, ces trois mondes n\'ont pas grand-chose à se dire. C\'est ce qui nous a plu.</p>'
+ '<h3>Le vrai problème était éditorial</h3>'
+ '<p>Laisser de la place au geste de Lorem sans faire une vitrine graphique, montrer le terrain sans cliché sportif, et garder la rigueur qu\'une banque attend.</p>'
+ '<h3>Comment on l\'a fait</h3>'
+ '<p>On a filmé le design de Lorem en train de se faire, en réponse à l\'énergie du match. La marque tient l\'ensemble sans prendre toute la place. Cadrage, rythme, musique, étalonnage&nbsp;: tout s\'est réglé plan par plan, pour le film entier et jamais pour un seul des trois univers.</p>'
+ '<p>Le film parle aux fans de foot comme aux clients de la banque, et garde la signature visuelle de Lorem. Vous avez un film avec plusieurs marques ou partenaires à faire travailler ensemble&nbsp;?</p></section>')
 
 def page_realisations():
     url = '/realisations/'
     items = [('Accueil', '/'), ('Réalisations', url)]
     cartes = ''.join(f'<a href="{c["url"]}">{picture(c["film"], "(max-width: 820px) 100vw, 33vw", "")}<b>{E(FILMS[c["film"]][1])}</b><span>{E(FILMS[c["film"]][2])}</span><span class="mono">{E(FILMS[c["film"]][4])} · {FILMS[c["film"]][6]} · {FILMS[c["film"]][8]}</span></a>' for c in CAS)
     corps = (fil(items, 'fr') +
-             '<div class="tete"><p class="lab">Études de cas</p><div><h1>Réalisations : six films racontés</h1>'
-             '<p class="intro">Pour chaque film, le contexte, ce qui le rendait difficile, la façon dont Yann l\'a tourné, et ce qui a été livré. <em>Les quinze films sont aussi sur l\'accueil.</em></p></div></div>'
+             '<div class="tete"><h1>Réalisations : six films racontés</h1>'
+             '<p class="intro">Le contexte, la difficulté, le tournage et ce qui a été livré. <em>Les quinze films sont sur l\'accueil.</em></p></div>'
              f'<section class="cas" aria-label="Études de cas">{cartes}</section>' +
-             liste_liens('Services', [(s['url'], s['nav'], s['court'], '') for s in SERVICES], 'fr') +
+             liste_liens('Services', [(s['url'], s['nav'], '', '') for s in SERVICES], 'fr') +
              bloc_contact('fr', 'Projet'))
     desc = "Six films de SilverFrame Agency racontés en détail : Crédit Agricole × FFF, Don Papa Rum, Keyena × Artik, The Ink Factory, VJM, Ozur. Contexte, défi, livrables."
     noeuds = [{'@type': 'CollectionPage', '@id': SITE + url, 'url': SITE + url, 'name': 'Réalisations · SilverFrame Agency, production vidéo à Lyon', 'description': desc, 'inLanguage': 'fr',
@@ -317,52 +294,43 @@ def accueil(lang):
     modele = open(os.path.join(RAC, 'outils', 'modele-accueil.html'), encoding='utf-8').read()
     def attr(k):
         f = FILMS[k]; nom = nom_client(f[1], lang); ti = titre_film(k, lang, court=True)
-        return f'data-film data-k="{k}" data-v="{f[7]}" data-vimeo="{f[0]}" data-nom="{E(nom + " · " + ti)}"'
-    T['RAIL'] = ''.join(
-        f'<div class="plan{" v" if FILMS[k][7] else ""}" {attr(k)} aria-label="{E(("Lire " if lang == "fr" else "Play ") + nom_client(FILMS[k][1], lang))}">'
-        f'{picture(k, "(max-width: 820px) 56vw, 30vw" if FILMS[k][7] else "(max-width: 820px) 84vw, 62vw", nom_client(FILMS[k][1], lang) + " · " + titre_film(k, lang, True), lazy=False)}'
-        f'<span class="n">{i + 1:02d} / {len(BANDE):02d}</span><div class="t"><b>{E(nom_client(FILMS[k][1], lang))}</b><span>{E(titre_film(k, lang, True))} · {FILMS[k][8]}</span></div></div>'
-        for i, k in enumerate(BANDE))
-    T['FILTRES'] = ''.join(f'<button type="button" class="{"on" if i == 0 else ""}" aria-pressed="{"true" if i == 0 else "false"}" onclick="filtrer(\'{c}\',this)">{n}</button>' for i, (c, n) in enumerate(FILTRES[lang]))
-    lab = 10 if lang == 'fr' else 11
-    T['LISTE'] = ''.join(
-        f'<div class="ligne" {attr(k)} data-c="{FILMS[k][9]}" aria-label="{E(("Lire le film " if lang == "fr" else "Play the film ") + nom_client(FILMS[k][1], lang) + ", " + titre_film(k, lang, True))}">'
-        f'<span class="n">{i + 1:02d}</span><span class="cl">{E(nom_client(FILMS[k][1], lang))}</span><span class="ti">{E(titre_film(k, lang, True))}</span>'
-        f'<span class="di">{E(FILMS[k][lab].upper())}</span><span class="an">{FILMS[k][8]}</span>'
-        f'{picture(k, "100vw", "", cls="vign")}</div>'
-        for i, k in enumerate(ORDRE))
-    def fig(k, c):
-        nom = nom_client(FILMS[k][1], lang) if k in FILMS else 'Kosmos'
-        a = attr(k) + f' aria-label="{E(("Lire " if lang == "fr" else "Play ") + nom)}"' if k in FILMS else ''
-        sizes = '(max-width: 820px) 100vw, 34vw' if c == 'g' else '(max-width: 820px) 33vw, 17vw'
-        return f'<figure class="{c}" {a}>{picture(k, sizes, nom)}<figcaption>{E(nom)}</figcaption></figure>'
-    T['GRILLE'] = ''.join(fig(k, c) for k, c in GRILLE)
+        return f'data-film data-v="{f[7]}" data-vimeo="{f[0]}" data-nom="{E(nom + " · " + ti)}"'
+    lire = 'Lire le film' if lang == 'fr' else 'Play the film'
+    # le film à la une (Crédit Agricole × Équipe de France × Lorem)
+    k = UNE; f = FILMS[k]; c = FILM_CAS.get(k)
+    coulisses = (f'<a class="lien" href="{c["url"]}">{"Les coulisses →" if lang == "fr" else "Behind the scenes (in French) →"}</a>' if c else '')
+    T['UNE'] = (f'<div class="une"><button class="affiche" type="button" {attr(k)} aria-label="{E(lire + " " + T["une_client"])}">'
+                f'{picture(k, "(max-width: 820px) 300px, 340px", "")}</button>'
+                f'<div><p class="cl">{E(T["une_client"])}</p><p class="ti">{E(titre_film(k, lang))}</p>'
+                f'<p class="mono">{E(f[4] if lang == "fr" else f[5])} · {duree_txt(k, lang)} · {f[8]}</p>'
+                f'<div class="actions"><button class="jouer" type="button" {attr(k)}><i aria-hidden="true">{SVG_PLAY}</i>{lire.upper()}</button>{coulisses}</div></div></div>')
+    T['GRILLE'] = ''.join(
+        f'<li><button class="vign" type="button" {attr(k)} aria-label="{E(lire + " " + nom_client(FILMS[k][1], lang) + ", " + titre_film(k, lang, True))}">'
+        f'{picture(k, "(max-width: 820px) 50vw, 25vw", "")}<b>{E(nom_client(FILMS[k][1], lang))}</b><span>{E(titre_film(k, lang, True))} · {FILMS[k][8]}</span></button></li>'
+        for k in ORDRE if k != UNE)
     if lang == 'fr':
-        T['SERVICES'] = ''.join(f'<a class="rang" href="{s["url"]}"><span class="n">{i + 1:02d}</span><b>{E(s["nav"])}</b><span class="d">{E(s["court"])}</span><i aria-hidden="true">→</i></a>' for i, s in enumerate(SERVICES))
+        T['SERVICES'] = ''.join(f'<a class="rang" href="{s["url"]}"><b>{E(s["nav"])}</b><span>{E(s["court"])}</span><i aria-hidden="true">→</i></a>' for s in SERVICES)
     else:
         en_serv = [('/en/agencies/', 'For agencies', 'White-label production, under your name', ''), ('/en/trade-show-video/', 'Trade shows', 'Stand film, vertical formats, aftermovie', ''),
-                   (SV['entreprise']['url'], 'Corporate films', 'Portraits, craft, workshops, campaigns (page in French)', 'fr'), (SV['evenement']['url'], 'Events and aftermovies', 'Coverage, aftermovie, social formats (page in French)', 'fr'),
-                   (SV['reseaux']['url'], 'Social media', '9:16 vertical formats, 1:1 and 16:9 cut-downs (page in French)', 'fr'), (SV['marque']['url'], 'Brand films and ads', 'Product, craft, brand image (page in French)', 'fr'),
+                   (SV['entreprise']['url'], 'Corporate films', 'Portraits, craft, workshops (page in French)', 'fr'), (SV['evenement']['url'], 'Events and aftermovies', 'Coverage, aftermovie, social formats (page in French)', 'fr'),
+                   (SV['reseaux']['url'], 'Social media', '9:16, 1:1 and 16:9 formats (page in French)', 'fr'), (SV['marque']['url'], 'Brand films and ads', 'Product, craft, brand image (page in French)', 'fr'),
                    (SV['montage']['url'], 'Editing and colour grading', 'Edit, grade, music videos (page in French)', 'fr')]
-        T['SERVICES'] = ''.join(f'<a class="rang" href="{u}"{" hreflang=" + chr(34) + h + chr(34) if h else ""}><span class="n">{i + 1:02d}</span><b>{E(n)}</b><span class="d">{E(d)}</span><i aria-hidden="true">→</i></a>' for i, (u, n, d, h) in enumerate(en_serv))
-    noms = [nom_client(n, lang) for _, n, _, _ in LOGOS]
-    T['PISTE'] = ''.join(f'<li>{E(n)}</li>' for n in noms) + ''.join(f'<li aria-hidden="true">{E(n)}</li>' for n in noms)
-    T['MURS'] = ''.join(f'<li><picture><source type="image/webp" srcset="/media/logos/{l}.webp"><img src="/media/logos/{l}.png" alt="{E(nom_client(n, lang))}" width="{w}" height="{h}" loading="lazy" decoding="async"></picture></li>' for l, n, w, h in LOGOS)
-    T['PAROLES'] = ''.join(f'<figure class="parole{" on" if i == 0 else ""}"><blockquote class="citation">{"« " + E(q) + " »" if lang == "fr" else "“" + E(q) + "”"}</blockquote><figcaption class="auteur">{E(a)}</figcaption></figure>' for i, (q, a) in enumerate(PAROLES[lang]))
-    T['PUCES'] = ''.join(f'<button type="button" onclick="parole({i})" aria-label="{"Témoignage" if lang == "fr" else "Testimonial"} {i + 1}"></button>' for i in range(len(PAROLES[lang])))
-    T['FAQ'] = ''.join(f'<details><summary>{E(q)}</summary><p>{E(r)}</p></details>' for q, r in FAQ[lang])
+        T['SERVICES'] = ''.join(f'<a class="rang" href="{u}"{" hreflang=" + chr(34) + h + chr(34) if h else ""}><b>{E(n)}</b><span>{E(d)}</span><i aria-hidden="true">→</i></a>' for u, n, d, h in en_serv)
+    T['LOGOS'] = ''.join(f'<li{" class=" + chr(34) + "fort" + chr(34) if i < 5 else ""}><picture><source type="image/webp" srcset="/media/logos/{l}.webp"><img src="/media/logos/{l}.png" alt="{E(nom_client(n, lang))}" width="{w}" height="{h}" decoding="async"></picture></li>' for i, (l, n, w, h) in enumerate(LOGOS))
+    # deux témoignages visibles (les autres restent dans llms-full.txt)
+    T['PAROLES'] = ''.join(f'<figure><blockquote class="citation">{"« " + E(q) + " »" if lang == "fr" else "“" + E(q) + "”"}</blockquote><figcaption class="auteur">{E(a)}</figcaption></figure>' for q, a in [PAROLES[lang][i] for i in PAROLES_ACCUEIL])
+    T['SVG_PLAY'] = SVG_PLAY
     T['PLAN'] = plan_site(lang)
     if lang == 'fr':
-        T['nav'] = '<a class="o" href="#films">Films</a><a href="#services">Services</a><a class="o" href="#agences">Agences</a><a class="o" href="#studio">Studio</a><a href="#contact">Contact</a><a class="lg" href="/en/" hreflang="en" lang="en" aria-label="English version">EN</a>'
+        T['nav'] = '<a class="o" href="#films">Films</a><a href="#services">Services</a><a class="o" href="/agences-marque-blanche/">Agences</a><a class="o" href="#studio">Studio</a><a href="#contact">Contact</a><a href="/en/" hreflang="en" lang="en" aria-label="English version">EN</a>'
     else:
-        T['nav'] = '<a class="o" href="#films">Films</a><a href="#services">Services</a><a class="o" href="#agences">Agencies</a><a class="o" href="#studio">Studio</a><a href="#contact">Contact</a><a class="lg" href="/" hreflang="fr" lang="fr" aria-label="Version française">FR</a>'
+        T['nav'] = '<a class="o" href="#films">Films</a><a href="#services">Services</a><a class="o" href="/en/agencies/">Agencies</a><a class="o" href="#studio">Studio</a><a href="#contact">Contact</a><a href="/" hreflang="fr" lang="fr" aria-label="Version française">FR</a>'
     T['hreflang'] = hreflang('/', '/en/')
     url = '/' if lang == 'fr' else '/en/'
     T['jsonld'] = jsonld([
         {'@type': 'WebSite', '@id': SITE + '/#site', 'url': SITE + '/', 'name': 'SilverFrame Agency', 'alternateName': 'SilverFrame', 'inLanguage': ['fr', 'en'], 'publisher': {'@id': ORG_ID}},
         {'@type': 'WebPage', '@id': SITE + url, 'url': SITE + url, 'name': T['title'], 'description': T['desc'], 'inLanguage': lang, 'isPartOf': {'@id': SITE + '/#site'}, 'about': {'@id': ORG_ID}, 'primaryImageOfPage': SITE + '/media/og.jpg'},
         organisation(), personne(),
-        {'@type': 'FAQPage', '@id': SITE + url + '#questions', 'inLanguage': lang, 'mainEntity': [{'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': r}} for q, r in FAQ[lang]]},
         {'@type': 'VideoObject', '@id': SITE + url + '#film-silverframe', 'name': 'SilverFrame · le film' if lang == 'fr' else 'SilverFrame · the film',
          'description': ("Le film d'une minute de SilverFrame Agency : extraits des films de Yann Volle." if lang == 'fr' else 'The one-minute SilverFrame Agency reel: excerpts from Yann Volle\'s films.'),
          'thumbnailUrl': SITE + '/media/boucle.jpg', 'contentUrl': SITE + '/media/' + T['film_fichier'] + '.mp4', 'duration': 'PT1M', 'inLanguage': lang, 'productionCompany': {'@id': ORG_ID}},
@@ -483,7 +451,7 @@ def llms():
     full = ['# SilverFrame Agency · texte complet du site', '', L[2], '']
     for s in SERVICES:
         full += [f'## {s["h1"]}', f'URL : {SITE}{s["url"]}', '', texte_brut(s['intro']), '']
-        for lab, h2, h in s['blocs']: full += [f'### {h2}', texte_brut(h), '']
+        for h2, h in s['blocs']: full += [f'### {h2}', texte_brut(h), '']
         full += ['Livrables : ' + ', '.join(s['livrables']), '']
     for c in CAS:
         if c.get('ancien'): full += [f'## {c["h1"]}', f'URL : {SITE}{c["url"]}', texte_brut(ANCIEN_CA), '']
@@ -499,6 +467,9 @@ def main():
     for s in SERVICES: ecrire(s['url'], page_service(s, 'fr'))
     for s in SERVICES_EN: ecrire(s['url'], page_service(s, 'en'))
     for c in CAS: ecrire(c['url'], page_cas(c))
+    # mentions légales (page écrite à la main) : seul le pied de page est remis à jour par le générateur
+    ml = os.path.join(RAC, 'mentions-legales/index.html'); h = open(ml, encoding='utf-8').read()
+    open(ml, 'w', encoding='utf-8').write(re.sub(r'<footer.*?</footer>', lambda m: plan_site('fr'), h, count=1, flags=re.S).replace('/media/pages.css?v=3', '/media/pages.css?v=4'))
     ecrire('/realisations/', page_realisations())
     open(os.path.join(RAC, 'sitemap.xml'), 'w').write(sitemap())
     open(os.path.join(RAC, 'robots.txt'), 'w').write(ROBOTS)

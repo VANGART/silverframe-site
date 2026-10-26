@@ -27,20 +27,19 @@ FILMS = {
   'vangart-fab':  ('691045247',  'VANGART', 'La fabrication des toiles brodées', 'How the embroidered artworks are made', 'Réalisation, tournage, étalonnage', 'Direction, shoot, grade', '1:29', 0, '2022', 'marque', 'Film de marque', 'Brand film', 1280, 624, '2022-03-22', 89),
   'bears':        ('751282874',  "Bear's Towers", '« Hometown », clip', '"Hometown", music video', 'Réalisation, montage, étalonnage', 'Direction, edit, grade', '3:02', 0, '2022', 'clip', 'Clip', 'Music video', 1280, 640, '2022-09-19', 182),
 }
-ORDRE = ['ca-fff', 'don-papa', 'ozur', 'ink-factory', 'vjm', 'sunborn', 'keyena', 'ca-candice', 'ca-campagne', 'telethon', 'ultimate', 'vangart-macro', 'monfairepart', 'vangart-fab', 'bears']
-BANDE = ['ca-fff', 'keyena', 'ink-factory', 'don-papa', 'vangart-macro', 'sunborn', 'ozur', 'ca-candice']
-GRILLE = [('vangart-macro', 'g'), ('keyena', ''), ('ca-fff', ''), ('ink-factory', ''), ('don-papa', ''), ('sunborn', ''), ('ca-candice', ''), ('ozur', 'g'), ('vjm', ''), ('ultimate', ''), ('bears', ''), ('monfairepart', ''), ('vangart-fab', ''), ('ca-campagne', ''), ('telethon', ''), ('kosmos', '')]
-FILTRES = {'fr': [('tout', 'Tout'), ('marque', 'Marques'), ('corporate', 'Corporate'), ('event', 'Événementiel'), ('social', 'Réseaux sociaux'), ('clip', 'Clips')],
-           'en': [('tout', 'All'), ('marque', 'Brands'), ('corporate', 'Corporate'), ('event', 'Events'), ('social', 'Social media'), ('clip', 'Music videos')]}
+# Accueil (26/10/2026) : le film Crédit Agricole × Équipe de France × Lorem à la une, puis les grandes marques d'abord.
+UNE = 'ca-fff'
+ORDRE = ['ca-fff', 'don-papa', 'keyena', 'ca-candice', 'ca-campagne', 'ink-factory', 'ozur', 'vjm', 'vangart-macro', 'sunborn', 'telethon', 'monfairepart', 'ultimate', 'vangart-fab', 'bears']
 
-# Titres courts de l'accueil (index), repris du site du 22/10/2026
+# Titres courts de l'accueil (grille des films), repris du site du 22/10/2026
 COURT = {'fr': {'ca-fff': "Un match de l'équipe de France, avec l'artiste Lorem", 'ink-factory': 'Aftermovie de la convention de tatouage', 'ozur': 'Les maillots, portés par une nageuse olympique',
                 'sunborn': '« Glacier »', 'keyena': 'Des pointes peintes à la main, un stade de nuit', 'ca-candice': 'Candice Chlovy, agricultrice', 'ca-campagne': 'Campagne régionale',
                 'telethon': 'Une œuvre pour le Téléthon', 'ultimate': '« Ultimate »', 'bears': '« Hometown »', 'don-papa': 'Winterlandia, un bar éphémère en station'},
          'en': {'ca-fff': 'A France national team match, with the artist Lorem', 'ink-factory': 'Aftermovie of the tattoo convention', 'sunborn': '"Glacier"', 'keyena': 'Hand-painted spikes, a stadium at night',
                 'ca-candice': 'Candice Chlovy, farmer', 'ca-campagne': 'Regional campaign', 'telethon': 'An artwork for the Téléthon', 'ultimate': '"Ultimate"', 'bears': '"Hometown"'}}
 
-LOGOS = [('credit-agricole', 'Crédit Agricole', 600, 122), ('fff', 'Équipe de France', 235, 300), ('deutsche-welle', 'Deutsche Welle', 533, 300), ('wella', 'Wella', 406, 300),
+# Ordre de la ligne de logos de l'accueil : les plus grandes références d'abord (les 5 premières un peu plus grandes).
+LOGOS = [('fff', 'Équipe de France', 235, 300), ('credit-agricole', 'Crédit Agricole', 600, 122), ('deutsche-welle', 'Deutsche Welle', 533, 300), ('wella', 'Wella', 406, 300),
          ('don-papa', 'Don Papa Rum', 600, 182), ('chapoutier', 'M. Chapoutier', 600, 199), ('aluna', 'Aluna Festival', 283, 300), ('ink-factory', 'The Ink Factory', 290, 300),
          ('kosmos', 'Kosmos', 600, 246), ('mjh', 'MJH Life Sciences', 600, 130), ('monfairepart', 'Monfairepart', 600, 129), ('vangart', 'VANGART', 371, 300)]
 NOM_EN = {'Équipe de France': 'France national football team'}
@@ -55,3 +54,4 @@ PAROLES = {
          ("Very responsive, professional and human. Work of very high quality.", 'ROMAIN UGHETTO · COMING SOON AGENCY'),
          ("The video is exceptional and meets our expectations perfectly.", 'MARYLINE JULLIEN · MARGARON')],
 }
+PAROLES_ACCUEIL = [0, 1]   # témoignages visibles sur l'accueil : M&R Digital Agency, Benjamin Beau (VANGART)
